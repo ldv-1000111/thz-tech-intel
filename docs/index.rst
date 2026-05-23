@@ -1,7 +1,7 @@
-Teradar Technology Intelligence
+Terahertz Technology Intelligence
 ================================
 
-Welcome to the Teradar Technology Intelligence hub — a living repository of
+Welcome to the Terahertz Technology Intelligence hub — a living repository of
 whitepapers, competitive analysis, and presentations covering Teradar's
 terahertz sensing platform across automotive, defense, healthcare, and security.
 
