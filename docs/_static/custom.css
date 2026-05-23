@@ -341,3 +341,6 @@
   color: #ccc;
   background: #111;
 }
+
+/* Hide RTD flyout badge on slide pages */
+readthedocs-flyout { display: none !important; }
