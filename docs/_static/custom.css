@@ -346,3 +346,6 @@
 readthedocs-flyout { display: none !important; }
 /* Slide content horizontal margin */
 .reveal .slides section { padding: 0 4rem !important; box-sizing: border-box !important; }
+
+/* Slide content horizontal margin */
+.reveal .slides section { padding: 0 3rem !important; box-sizing: border-box !important; }
