@@ -349,3 +349,6 @@ readthedocs-flyout { display: none !important; }
 
 /* Slide content horizontal margin */
 .reveal .slides section { padding: 0 3rem !important; box-sizing: border-box !important; }
+
+/* Scale down h1 on slides */
+.reveal h1 { font-size: 1.6em !important; font-weight: 800 !important; }
