@@ -1,143 +1,343 @@
-/* Teradar brand overrides for reveal.js */
+/* ============================================================
+   TERADAR — reveal.js Presentation Theme
+   Dark · #1BEA9A green · DM Mono + Syne display
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap');
+
 :root {
-  --teradar-green: #1D9E75;
-  --teradar-blue: #378ADD;
-  --teradar-amber: #EF9F27;
-  --teradar-gray: #888780;
+  --t-black:     #080808;
+  --t-dark:      #0f0f0f;
+  --t-panel:     #141414;
+  --t-border:    #222;
+  --t-green:     #1BEA9A;
+  --t-green-dim: #0d7a4e;
+  --t-white:     #f0f0f0;
+  --t-muted:     #666;
+  --t-mono:      'DM Mono', monospace;
+  --t-display:   'Syne', sans-serif;
+  --t-body:      'Inter', sans-serif;
 }
 
+/* ── BASE ── */
+.reveal-viewport {
+  background: var(--t-black);
+}
+
+.reveal {
+  font-family: var(--t-body);
+  font-size: 36px;
+  color: var(--t-white);
+}
+
+/* ── HEADINGS ── */
 .reveal h1,
 .reveal h2,
-.reveal h3 {
-  font-family: sans-serif;
+.reveal h3,
+.reveal h4 {
+  font-family: var(--t-display);
   text-transform: none;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.5em;
 }
 
-.reveal h1 { color: #ffffff; font-size: 2.2em; }
-.reveal h2 { color: var(--teradar-green); font-size: 1.4em; border-bottom: 1px solid #333; padding-bottom: 0.2em; margin-bottom: 0.6em; }
-.reveal h3 { color: #cccccc; font-size: 1.1em; }
+.reveal h1 {
+  font-size: 2.4em;
+  font-weight: 800;
+  color: #ffffff;
+}
 
+.reveal h2 {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--t-green);
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--t-border);
+  margin-bottom: 0.6em;
+}
+
+.reveal h3 {
+  font-size: 1em;
+  font-weight: 600;
+  color: #aaa;
+}
+
+/* ── TITLE SLIDE subtitle ── */
+.reveal .subtitle {
+  font-family: var(--t-mono);
+  font-size: 0.45em;
+  color: var(--t-muted);
+  margin-top: 0.3em;
+  display: block;
+  letter-spacing: 0.06em;
+}
+
+/* ── SLIDES ── */
+.reveal .slides section {
+  padding: 0 1.5rem;
+}
+
+/* ── BODY TEXT ── */
+.reveal p {
+  font-size: 0.72em;
+  color: #bbb;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── LISTS ── */
+.reveal ul {
+  margin-left: 1.2em;
+  list-style: none;
+}
+
+.reveal ul li {
+  font-size: 0.68em;
+  color: #bbb;
+  margin-bottom: 0.4em;
+  line-height: 1.5;
+  position: relative;
+  font-weight: 300;
+}
+
+.reveal ul li::before {
+  content: '—';
+  color: var(--t-green);
+  position: absolute;
+  left: -1.4em;
+  font-family: var(--t-mono);
+}
+
+/* ── TABLES ── */
 .reveal table {
-  font-size: 0.62em;
+  font-size: 0.55em;
   border-collapse: collapse;
   width: 100%;
-  margin: 0 auto;
+  margin: 0.5em auto;
 }
 
 .reveal table th {
-  background: #1a1a1a;
-  color: var(--teradar-green);
-  padding: 8px 10px;
-  border: 1px solid #333;
+  background: var(--t-panel);
+  color: var(--t-green);
+  font-family: var(--t-mono);
+  font-size: 0.9em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border: 1px solid var(--t-border);
+  font-weight: 500;
   text-align: center;
-  font-weight: 600;
 }
 
 .reveal table td {
-  padding: 7px 10px;
-  border: 1px solid #2a2a2a;
+  padding: 7px 12px;
+  border: 1px solid var(--t-border);
+  color: #bbb;
   text-align: center;
   vertical-align: middle;
 }
 
 .reveal table tr:nth-child(even) td {
-  background: #141414;
+  background: #0f0f0f;
 }
 
 .reveal table tr:nth-child(odd) td {
-  background: #1e1e1e;
+  background: #0a0a0a;
 }
 
 .reveal table td:first-child {
   text-align: left;
-  color: #aaaaaa;
-  font-size: 0.95em;
+  font-weight: 500;
+  color: var(--t-white);
+  font-family: var(--t-body);
 }
 
+/* ── CODE ── */
+.reveal code {
+  font-family: var(--t-mono);
+  background: var(--t-panel);
+  color: var(--t-green);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+/* ── BLOCKQUOTE / CALLOUT ── */
+.reveal blockquote {
+  background: var(--t-panel);
+  border: 1px solid var(--t-border);
+  border-left: 3px solid var(--t-green);
+  border-radius: 0 4px 4px 0;
+  padding: 0.6em 1em;
+  font-size: 0.6em;
+  color: #aaa;
+  width: 92%;
+  margin: 0.6em auto;
+  font-style: normal;
+  text-align: left;
+}
+
+/* ── SECTION INTRO ── */
+.reveal .section-intro {
+  font-family: var(--t-mono);
+  font-size: 0.48em;
+  color: var(--t-muted);
+  margin-bottom: 0.8em;
+  display: block;
+  letter-spacing: 0.04em;
+}
+
+/* ── PILL BADGES ── */
 .pill {
   display: inline-block;
   padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  font-weight: 600;
-}
-
-.pill-green  { background: #0f3d2a; color: #4ade80; }
-.pill-amber  { background: #3d2a00; color: #fbbf24; }
-.pill-blue   { background: #0c2a4a; color: #60a5fa; }
-.pill-gray   { background: #2a2a2a; color: #9ca3af; }
-.pill-teal   { background: #0a2e22; color: #2dd4bf; }
-
-.reveal .subtitle {
-  color: #888;
-  font-size: 0.8em;
-  margin-top: -0.5em;
-}
-
-.reveal blockquote {
-  background: #1a1a1a;
-  border-left: 3px solid var(--teradar-green);
-  padding: 0.6em 1em;
+  border-radius: 2px;
+  font-family: var(--t-mono);
   font-size: 0.75em;
-  color: #ccc;
-  width: 90%;
-  margin: 0.5em auto;
+  font-weight: 500;
+  letter-spacing: 0.04em;
 }
 
-.reveal ul {
-  margin-left: 1em;
-}
+.pill-green  { background: #0a2e1a; color: #1BEA9A; border: 1px solid #0d7a4e; }
+.pill-amber  { background: #2e1a00; color: #f5a623; border: 1px solid #7a4a00; }
+.pill-blue   { background: #001a2e; color: #60a5fa; border: 1px solid #004a7a; }
+.pill-gray   { background: #1a1a1a; color: #888;    border: 1px solid #2a2a2a; }
+.pill-teal   { background: #0a2e22; color: #2dd4bf; border: 1px solid #0a5a44; }
+.pill-red    { background: #2e0a0a; color: #f87171; border: 1px solid #7a1a1a; }
+.pill-purple { background: #1a0a2e; color: #a78bfa; border: 1px solid #4a1a7a; }
 
-.reveal ul li {
-  margin-bottom: 0.4em;
-  font-size: 0.82em;
-}
-
+/* ── CARD GRID ── */
 .col-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5em;
+  gap: 1em;
   text-align: left;
 }
 
 .card {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
+  background: var(--t-panel);
+  border: 1px solid var(--t-border);
+  border-radius: 4px;
   padding: 0.8em 1em;
 }
 
 .card h4 {
-  color: var(--teradar-green);
-  margin: 0 0 0.5em;
-  font-size: 0.85em;
+  font-family: var(--t-mono);
+  font-size: 0.6em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.6em;
+  color: var(--t-green);
 }
 
 .card p, .card li {
-  font-size: 0.72em;
-  color: #ccc;
+  font-size: 0.62em;
+  color: #aaa;
   margin: 0.2em 0;
+  font-weight: 300;
 }
 
+.card li::before {
+  content: '—';
+  color: var(--t-green-dim);
+  position: absolute;
+  left: -1.2em;
+  font-family: var(--t-mono);
+}
+
+/* ── HERO STAT ── */
 .hero-stat {
-  font-size: 3em;
-  font-weight: 700;
-  color: var(--teradar-green);
+  font-family: var(--t-display);
+  font-size: 3.5em;
+  font-weight: 800;
+  color: var(--t-green);
   display: block;
+  line-height: 1;
 }
 
 .hero-label {
-  font-size: 0.7em;
-  color: #888;
+  font-family: var(--t-mono);
+  font-size: 0.5em;
+  color: var(--t-muted);
   display: block;
-  margin-top: -0.3em;
+  letter-spacing: 0.08em;
+  margin-top: 0.3em;
+  text-transform: uppercase;
 }
 
-.section-intro {
-  font-size: 0.75em;
-  color: #aaa;
-  margin-bottom: 1em;
+/* ── PROGRESS BAR ── */
+.reveal .progress {
+  color: var(--t-green);
+  height: 2px;
+}
+
+/* ── CONTROLS ── */
+.reveal .controls {
+  color: var(--t-green);
+}
+
+/* ── SLIDE NUMBER ── */
+.reveal .slide-number {
+  font-family: var(--t-mono);
+  font-size: 0.5em;
+  color: var(--t-muted);
+  background: transparent;
+  bottom: 12px;
+  right: 16px;
+}
+
+/* ── LINKS ── */
+.reveal a {
+  color: var(--t-green);
+  text-decoration: none;
+}
+
+.reveal a:hover {
+  text-decoration: underline;
+}
+
+/* ── FRAGMENTS ── */
+.reveal .fragment {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+
+.reveal .fragment.visible {
+  opacity: 1;
+}
+
+/* ── TERADAR LOGO MARK (top-left watermark) ── */
+.reveal::before {
+  content: 'TERADAR';
+  position: fixed;
+  top: 14px;
+  left: 20px;
+  font-family: var(--t-display);
+  font-size: 0.38em;
+  font-weight: 800;
+  color: var(--t-green);
+  letter-spacing: 0.15em;
+  z-index: 100;
+  opacity: 0.7;
+}
+
+/* ── GREEN ACCENT LINE (bottom) ── */
+.reveal::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--t-green) 0%, transparent 100%);
+  z-index: 100;
+}
+
+/* ── SPEAKER NOTES ── */
+.speaker-notes {
+  font-family: var(--t-body);
+  font-size: 0.9rem;
+  color: #ccc;
+  background: #111;
 }

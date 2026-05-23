@@ -1,0 +1,273 @@
+/* ============================================================
+   TERADAR — ReadTheDocs / Furo Theme Override
+   Brand: Dark #0a0a0a bg · #1BEA9A green · white type · mono accents
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap');
+
+/* ── TOKENS ── */
+:root {
+  --teradar-black:      #080808;
+  --teradar-dark:       #0f0f0f;
+  --teradar-panel:      #141414;
+  --teradar-border:     #1e1e1e;
+  --teradar-green:      #1BEA9A;
+  --teradar-green-dim:  #0f7a50;
+  --teradar-white:      #f2f2f2;
+  --teradar-muted:      #777;
+  --teradar-mono:       'DM Mono', monospace;
+  --teradar-display:    'Syne', sans-serif;
+  --teradar-body:       'Inter', sans-serif;
+}
+
+/* ── GLOBAL RESET ── */
+body,
+.page,
+.content,
+article {
+  background: var(--teradar-black) !important;
+  color: var(--teradar-white) !important;
+  font-family: var(--teradar-body) !important;
+  font-weight: 300;
+}
+
+/* ── SIDEBAR ── */
+.sidebar-drawer,
+.sidebar-container,
+.sidebar-scroll {
+  background: var(--teradar-dark) !important;
+  border-right: 1px solid var(--teradar-border) !important;
+}
+
+.sidebar-brand-text {
+  font-family: var(--teradar-display) !important;
+  font-weight: 800 !important;
+  font-size: 1.05rem !important;
+  color: var(--teradar-green) !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase;
+}
+
+/* Sidebar logo strip */
+.sidebar-brand {
+  border-bottom: 1px solid var(--teradar-border) !important;
+  padding: 1.2rem 1rem !important;
+}
+
+/* Nav links */
+.sidebar-tree a,
+.sidebar-tree label {
+  font-family: var(--teradar-body) !important;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: var(--teradar-muted) !important;
+  letter-spacing: 0.02em;
+}
+
+.sidebar-tree a:hover,
+.sidebar-tree .current-page > a {
+  color: var(--teradar-green) !important;
+}
+
+.sidebar-tree .current-page > a {
+  border-left: 2px solid var(--teradar-green) !important;
+  padding-left: 0.6rem;
+}
+
+/* Caption labels */
+.sidebar-tree .caption {
+  font-family: var(--teradar-mono) !important;
+  font-size: 0.65rem !important;
+  color: var(--teradar-green) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  margin-top: 1.4rem !important;
+}
+
+/* ── TOPBAR ── */
+.mobile-header,
+.header-bar {
+  background: var(--teradar-dark) !important;
+  border-bottom: 1px solid var(--teradar-border) !important;
+}
+
+/* ── CONTENT AREA ── */
+.content-container {
+  max-width: 860px;
+}
+
+/* ── HEADINGS ── */
+h1, h2, h3, h4, h5, h6,
+article h1, article h2, article h3 {
+  font-family: var(--teradar-display) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--teradar-white) !important;
+}
+
+h1 { font-size: 2.4rem !important; font-weight: 800 !important; }
+h2 { font-size: 1.4rem !important; margin-top: 2.4rem !important; }
+h3 { font-size: 1.1rem !important; color: var(--teradar-green) !important; }
+
+/* Green left rule on h2 */
+h2 {
+  padding-left: 0.8rem !important;
+  border-left: 3px solid var(--teradar-green) !important;
+}
+
+/* ── BODY TEXT ── */
+p, li, td, th {
+  font-family: var(--teradar-body) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.75 !important;
+  color: #ccc !important;
+}
+
+/* ── LINKS ── */
+a, a:visited {
+  color: var(--teradar-green) !important;
+  text-decoration: none !important;
+}
+a:hover { text-decoration: underline !important; }
+
+/* ── TABLES ── */
+table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+  font-size: 0.82rem !important;
+  margin: 1.5rem 0 !important;
+}
+
+thead th {
+  background: var(--teradar-panel) !important;
+  color: var(--teradar-green) !important;
+  font-family: var(--teradar-mono) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  padding: 10px 14px !important;
+  border: 1px solid var(--teradar-border) !important;
+  font-weight: 500 !important;
+}
+
+tbody td {
+  padding: 9px 14px !important;
+  border: 1px solid var(--teradar-border) !important;
+  color: #bbb !important;
+  vertical-align: middle !important;
+}
+
+tbody tr:nth-child(even) td {
+  background: var(--teradar-panel) !important;
+}
+
+tbody tr:hover td {
+  background: #1a1a1a !important;
+}
+
+/* First col bold label */
+tbody td:first-child {
+  font-weight: 500 !important;
+  color: var(--teradar-white) !important;
+}
+
+/* ── CODE / MONO ── */
+code, pre, .highlight {
+  font-family: var(--teradar-mono) !important;
+  background: var(--teradar-panel) !important;
+  border: 1px solid var(--teradar-border) !important;
+  border-radius: 4px !important;
+  color: var(--teradar-green) !important;
+  font-size: 0.82rem !important;
+}
+
+pre {
+  padding: 1rem 1.2rem !important;
+  overflow-x: auto !important;
+}
+
+/* ── ADMONITIONS (note, warning) ── */
+.admonition {
+  background: var(--teradar-panel) !important;
+  border: 1px solid var(--teradar-border) !important;
+  border-left: 3px solid var(--teradar-green) !important;
+  border-radius: 0 4px 4px 0 !important;
+  padding: 0.8rem 1.2rem !important;
+}
+
+.admonition-title {
+  font-family: var(--teradar-mono) !important;
+  font-size: 0.7rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  color: var(--teradar-green) !important;
+}
+
+/* ── FOOTER ── */
+footer, .footer {
+  background: var(--teradar-dark) !important;
+  border-top: 1px solid var(--teradar-border) !important;
+  font-family: var(--teradar-mono) !important;
+  font-size: 0.7rem !important;
+  color: var(--teradar-muted) !important;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--teradar-dark); }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teradar-green-dim); }
+
+/* ── RTD VERSION FLYOUT ── */
+.rst-versions, .readthedocs-flyout {
+  background: var(--teradar-panel) !important;
+  border-top: 1px solid var(--teradar-border) !important;
+  font-family: var(--teradar-mono) !important;
+  font-size: 0.75rem !important;
+}
+
+/* ── SEARCH ── */
+[role="search"] input {
+  background: var(--teradar-panel) !important;
+  border: 1px solid var(--teradar-border) !important;
+  color: var(--teradar-white) !important;
+  font-family: var(--teradar-body) !important;
+  border-radius: 4px !important;
+}
+
+[role="search"] input:focus {
+  border-color: var(--teradar-green) !important;
+  outline: none !important;
+}
+
+/* ── HORIZONTAL RULES ── */
+hr {
+  border: none !important;
+  border-top: 1px solid var(--teradar-border) !important;
+  margin: 2rem 0 !important;
+}
+
+/* ── PREV/NEXT NAVIGATION ── */
+.bottom-of-page {
+  border-top: 1px solid var(--teradar-border) !important;
+}
+
+.prev-next-area a {
+  background: var(--teradar-panel) !important;
+  border: 1px solid var(--teradar-border) !important;
+  border-radius: 4px !important;
+  color: var(--teradar-white) !important;
+  font-family: var(--teradar-body) !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.prev-next-area a:hover {
+  border-color: var(--teradar-green) !important;
+  text-decoration: none !important;
+}
+
+/* ── SELECTION ── */
+::selection {
+  background: var(--teradar-green) !important;
+  color: var(--teradar-black) !important;
+}
