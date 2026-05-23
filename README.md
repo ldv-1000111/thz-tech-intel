@@ -5,8 +5,8 @@ hosted on Read the Docs.
 
 ## Live Site
 
-- **Docs:** https://thz-tech-intel.readthedocs.io/en/latest/
-- **Scoreboard slides:** https://thz-tech-intel.readthedocs.io/en/latest/slides/scoreboard.html
+- **Docs:** https://terahertz-technology-intelligence.readthedocs.io/en/latest/
+- **Scoreboard slides:** https://terahertz-technology-intelligence.readthedocs.io/en/latest/slides/scoreboard.html
 
 ## Structure
 
