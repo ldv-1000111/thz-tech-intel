@@ -344,3 +344,5 @@
 
 /* Hide RTD flyout badge on slide pages */
 readthedocs-flyout { display: none !important; }
+/* Slide content horizontal margin */
+.reveal .slides section { padding: 0 4rem !important; box-sizing: border-box !important; }
