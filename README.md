@@ -1,7 +1,12 @@
-# Teradar Technology Intelligence
+# THZ Tech Intel
 
 A Sphinx documentation site with embedded reveal.js presentations,
 hosted on Read the Docs.
+
+## Live Site
+
+- **Docs:** https://thz-tech-intel.readthedocs.io/en/latest/
+- **Scoreboard slides:** https://thz-tech-intel.readthedocs.io/en/latest/slides/scoreboard.html
 
 ## Structure
 
@@ -11,7 +16,7 @@ hosted on Read the Docs.
     ├── conf.py                # Sphinx config (html + revealjs)
     ├── requirements.txt       # Python dependencies
     ├── _static/
-    │   └── custom.css         # Teradar brand styles for reveal.js
+    │   └── custom.css         # Brand styles for reveal.js
     ├── index.rst              # Docs home
     ├── overview.rst           # Technology overview
     ├── competitive.rst        # Competitive analysis (Teradar/Arbe/Mobileye)
@@ -27,11 +32,7 @@ hosted on Read the Docs.
 | `/en/latest/` | Normal Sphinx/Furo docs |
 | `/en/latest/competitive/` | Full competitive analysis |
 | `/en/latest/slides/` | Presentations index |
-| `/en/latest/slides/scoreboard/` | reveal.js scoreboard (linked from slides build) |
-
-The `.readthedocs.yaml` runs two `sphinx-build` commands:
-1. `sphinx-build -b html` → standard docs
-2. `sphinx-build -b revealjs` → slides output nested under `/slides/`
+| `/en/latest/slides/scoreboard.html` | reveal.js scoreboard |
 
 ## Local development
 
