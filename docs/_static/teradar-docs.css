@@ -271,3 +271,21 @@ hr {
   background: var(--teradar-green) !important;
   color: var(--teradar-black) !important;
 }
+
+/* Fix sidebar brand wrapping */
+.sidebar-brand-text {
+  font-size: 0.85rem !important;
+  white-space: nowrap !important;
+}
+
+/* Fix body text — override green bleed from links */
+article p, article li, article td {
+  color: #cccccc !important;
+}
+
+/* Hide EthicalAds sidebar ad */
+.ethical-sidebar,
+.ethical-ads,
+[data-ea-publisher] {
+  display: none !important;
+}
