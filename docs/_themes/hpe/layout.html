@@ -1,0 +1,100 @@
+{%- extends "basic/layout.html" %}
+
+{%- block htmltitle %}
+<title>{{ title|striptags|e }}{{ titlesuffix }}</title>
+{%- endblock %}
+
+{%- block extrahead %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap">
+<link rel="stylesheet" href="{{ pathto('_static/css/base.css', 1) }}">
+<link rel="stylesheet" href="{{ pathto('_static/css/layout.css', 1) }}">
+<link rel="stylesheet" href="{{ pathto('_static/css/components.css', 1) }}">
+<link rel="stylesheet" href="{{ pathto('_static/css/rtd-theme.css', 1) }}">
+{{ super() }}
+{%- endblock %}
+
+{%- block header %}{% endblock %}
+{%- block relbar1 %}{% endblock %}
+{%- block relbar2 %}{% endblock %}
+
+{%- block body_tag %}
+<body>
+
+<!-- ── Top header ── -->
+<header class="rtd-header">
+  <a href="{{ pathto(master_doc) }}" class="project-name">
+    {{ project }}
+  </a>
+  <span class="version-badge">{{ version }}</span>
+</header>
+
+<!-- ── Layout wrapper ── -->
+<div class="rtd-wrapper">
+
+  <!-- ── Left sidebar nav ── -->
+  <nav class="rtd-nav">
+    {%- for item in toctree(maxdepth=4, collapse=False, includehidden=True, titles_only=False) %}
+    {{ item }}
+    {%- endfor %}
+    {%- block sidebarsearch %}
+    <div style="padding: 16px 20px;">
+      <form action="{{ pathto('search') }}" method="get" style="display:flex;gap:6px;">
+        <input type="text" name="q" placeholder="Search…"
+               style="flex:1;padding:5px 8px;background:#3d5166;border:1px solid #4a6080;
+                      border-radius:3px;color:#fff;font-size:13px;outline:none;">
+        <button type="submit"
+                style="background:#2980b9;border:none;color:#fff;padding:5px 10px;
+                       border-radius:3px;cursor:pointer;font-size:12px;">Go</button>
+      </form>
+    </div>
+    {%- endblock %}
+  </nav>
+
+  <!-- ── Main content ── -->
+  <main class="rtd-content">
+    <article class="rtd-article">
+{%- endblock %}
+
+{%- block document %}
+      {{ super() }}
+{%- endblock %}
+
+{%- block footer %}
+      <div class="rtd-footer">
+        <span>{{ project }}</span>
+        <span>
+          {%- if last_updated %}Last updated: {{ last_updated }} · {%- endif %}
+          Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+        </span>
+      </div>
+    </article>
+
+    <!-- ── Right in-page TOC ── -->
+    <aside class="rtd-toc">
+      <div class="rtd-toc-title">On this page</div>
+      {{ toc }}
+    </aside>
+
+  </main>
+</div>
+
+<script>
+/* Scroll highlight for right TOC */
+const sections = document.querySelectorAll('h2[id], h3[id]');
+const tocLinks = document.querySelectorAll('.rtd-toc a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  tocLinks.forEach(a => {
+    const active = a.getAttribute('href') === '#' + current;
+    a.style.color           = active ? 'var(--rtd-link)' : '';
+    a.style.borderLeftColor = active ? 'var(--rtd-link)' : '';
+  });
+});
+</script>
+
+</body>
+</html>
+{%- endblock %}

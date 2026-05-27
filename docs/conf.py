@@ -2,32 +2,26 @@ project = "Terahertz Technology Intelligence"
 copyright = "2025, Teradar"
 author = "Teradar"
 release = "1.0"
+version = "1.0"
 
 extensions = ["sphinx_revealjs"]
 
-# ── HTML — sphinx_rtd_theme (what HPE HOWTO was written for) ──
-html_theme = "sphinx_rtd_theme"
-html_title = "THZ Tech Intel"
+# ── Custom HPE theme ──────────────────────────────────────────
+html_theme      = "hpe"
+html_theme_path = ["_themes"]
+html_title      = "THZ Tech Intel"
 
-html_theme_options = {
-    "navigation_depth": 4,
-    "collapse_navigation": False,
-    "sticky_navigation": True,
-    "includehidden": True,
-    "titles_only": False,
-}
+html_theme_options = {}
 
-html_static_path  = ["_static"]
-templates_path    = ["_templates"]
+html_static_path = ["_static"]
 
-# Option A per HOWTO: base + components + rtd-theme (no layout.css)
-html_css_files = [
-    "css/base.css",
-    "css/components.css",
-    "css/rtd-theme.css",
-]
+# CSS served from _static (copied there at build time via theme)
+html_css_files = []
 
-# ── reveal.js (slides keep Teradar dark theme) ───────────────
+# last updated date in footer
+html_last_updated_fmt = "%B %Y"
+
+# ── reveal.js (slides) ───────────────────────────────────────
 revealjs_theme = "black"
 revealjs_script_conf = {
     "controls":             True,

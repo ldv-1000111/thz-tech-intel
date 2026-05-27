@@ -1,3 +1,2 @@
 sphinx>=7.0
 sphinx-revealjs>=3.2.1
-sphinx-rtd-theme
