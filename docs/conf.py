@@ -1,27 +1,40 @@
-project = "Terahertz Technology Intelligence"
+# conf.py — Terahertz Technology Intelligence
+project   = "Terahertz Technology Intelligence"
 copyright = "2025, Teradar"
-author = "Teradar"
-release = "1.0"
-version = "1.0"
+author    = "Teradar"
+release   = "1.0"
+version   = "1.0"
 
-extensions = ["sphinx_revealjs"]
+extensions = [
+    "sphinx_revealjs",
+    "sphinx_copybutton",
+]
 
-# ── Custom HPE theme ──────────────────────────────────────────
-html_theme      = "hpe"
-html_theme_path = ["_themes"]
-html_title      = "THZ Tech Intel"
+html_theme = "sphinx_rtd_theme"
+html_theme_options = {
+    "logo_only":                  False,
+    "display_version":            True,
+    "prev_next_buttons_location": "bottom",
+    "style_external_links":       True,
+    "collapse_navigation":        False,
+    "sticky_navigation":          True,
+    "navigation_depth":           4,
+}
 
-html_theme_options = {}
+html_static_path     = ["_static"]
+html_css_files       = ["custom.css"]
+html_show_sphinx     = False
+html_show_sourcelink = False
 
-html_static_path = ["_static"]
+master_doc       = "index"
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+source_suffix    = {".rst": "restructuredtext"}
+pygments_style   = "monokai"
 
-# CSS served from _static (copied there at build time via theme)
-html_css_files = []
+copybutton_prompt_text     = r"^\$ |>>> "
+copybutton_prompt_is_regexp = True
 
-# last updated date in footer
-html_last_updated_fmt = "%B %Y"
-
-# ── reveal.js (slides) ───────────────────────────────────────
+# ── reveal.js (slides keep Teradar dark theme) ───────────────
 revealjs_theme = "black"
 revealjs_script_conf = {
     "controls":             True,
