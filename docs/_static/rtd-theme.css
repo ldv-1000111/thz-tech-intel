@@ -1,0 +1,248 @@
+/* ============================================================
+   rtd-theme.css — Furo overrides: fonts, sidebar, version badge,
+                   nav section titles, scrollbar, TOC highlight
+   Teradar Technology Intelligence theme
+   ============================================================ */
+
+/* ── Force dark background everywhere ── */
+body,
+.page,
+.sidebar-drawer,
+.sidebar-container,
+.sidebar-scroll,
+.content,
+article,
+.content-container {
+  background: var(--rtd-content-bg) !important;
+  color: var(--rtd-text) !important;
+}
+
+/* ── Sidebar ── */
+.sidebar-drawer,
+.sidebar-container,
+.sidebar-scroll {
+  background: var(--rtd-nav-bg) !important;
+  border-right: 1px solid var(--rtd-border) !important;
+}
+
+/* ── Sidebar brand ── */
+.sidebar-brand {
+  border-bottom: 1px solid var(--rtd-border) !important;
+  padding: 1.1rem 1rem !important;
+}
+
+.sidebar-brand-text {
+  font-family: var(--font-display) !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  color: var(--rtd-nav-active) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+/* ── Sidebar nav links ── */
+.sidebar-tree a,
+.sidebar-tree label {
+  font-family: var(--font-body) !important;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: var(--rtd-nav-text) !important;
+}
+
+.sidebar-tree a:hover {
+  color: #ffffff !important;
+  background: var(--rtd-nav-hover) !important;
+}
+
+.sidebar-tree .current-page > a {
+  color: #ffffff !important;
+  border-left: 2px solid var(--rtd-nav-active) !important;
+  background: #0a1f15 !important;
+  font-weight: 500 !important;
+}
+
+/* ── Sidebar section captions ── */
+.sidebar-tree .caption,
+.sidebar-tree p.caption {
+  font-family: var(--font-mono) !important;
+  font-size: 0.65rem !important;
+  color: var(--rtd-nav-active) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+  margin-top: 1.4rem !important;
+  padding-bottom: 0.2rem !important;
+}
+
+/* ── Top mobile header ── */
+.mobile-header,
+.header-bar {
+  background: var(--rtd-header-bg) !important;
+  border-bottom: 1px solid var(--rtd-border) !important;
+}
+
+/* ── Article headings (Furo overrides) ── */
+article h1 {
+  font-family: var(--font-display) !important;
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid var(--rtd-border) !important;
+  letter-spacing: -0.02em !important;
+}
+
+article h2 {
+  font-family: var(--font-display) !important;
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  color: #f0f0f0 !important;
+  border-left: 3px solid var(--rtd-nav-active) !important;
+  border-bottom: none !important;
+  padding-left: 0.8rem !important;
+  letter-spacing: -0.01em !important;
+}
+
+article h3 {
+  font-family: var(--font-display) !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  color: var(--rtd-nav-active) !important;
+}
+
+article h4 {
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  color: var(--rtd-text-light) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ── Body text ── */
+article p,
+article li,
+.content p,
+.content li {
+  font-family: var(--font-body) !important;
+  font-size: 0.9rem !important;
+  color: #cccccc !important;
+  font-weight: 300 !important;
+  line-height: 1.75 !important;
+}
+
+/* ── Links ── */
+article a,
+.content a {
+  color: var(--rtd-nav-active) !important;
+}
+
+article a:hover {
+  color: var(--rtd-link-hover) !important;
+}
+
+/* ── Admonition override ── */
+.admonition {
+  background: var(--rtd-note-bg) !important;
+  border-color: var(--rtd-nav-active) !important;
+}
+
+.admonition-title {
+  color: var(--rtd-nav-active) !important;
+}
+
+/* ── Prev / Next nav ── */
+.bottom-of-page {
+  border-top: 1px solid var(--rtd-border) !important;
+}
+
+.prev-next-area a {
+  background: var(--rtd-nav-bg) !important;
+  border: 1px solid var(--rtd-border) !important;
+  border-radius: 3px !important;
+  color: #cccccc !important;
+  font-family: var(--font-body) !important;
+  transition: border-color 0.15s !important;
+}
+
+.prev-next-area a:hover {
+  border-color: var(--rtd-nav-active) !important;
+  text-decoration: none !important;
+}
+
+/* ── Footer ── */
+footer,
+.footer,
+.bottom-of-page {
+  background: var(--rtd-nav-bg) !important;
+  border-top: 1px solid var(--rtd-border) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.7rem !important;
+  color: var(--rtd-text-light) !important;
+}
+
+/* ── Search box ── */
+[role="search"] input {
+  background: #141414 !important;
+  border: 1px solid var(--rtd-border) !important;
+  color: #ffffff !important;
+  font-family: var(--font-body) !important;
+  border-radius: 3px !important;
+}
+
+[role="search"] input:focus {
+  border-color: var(--rtd-nav-active) !important;
+  outline: none !important;
+}
+
+/* ── RTD version flyout ── */
+.rst-versions,
+.readthedocs-flyout {
+  background: #0f0f0f !important;
+  border-top: 1px solid var(--rtd-border) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+}
+
+/* ── Hide EthicalAds ── */
+.ethical-sidebar,
+.ethical-ads,
+[data-ea-publisher],
+#ethical-ad-placement {
+  display: none !important;
+}
+
+/* ── Nav section titles (RTD theme class) ── */
+.nav-section-title {
+  font-family: var(--font-mono) !important;
+  color: var(--rtd-nav-active) !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+}
+
+/* ── Scrollbar ── */
+.sidebar-scroll::-webkit-scrollbar { width: 4px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+/* ── Right TOC active state (set via JS) ── */
+.rtd-toc a[data-active="true"] {
+  color: var(--rtd-nav-active);
+  border-left-color: var(--rtd-nav-active);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1199px) {
+  .rtd-toc { display: none; }
+}
+
+@media (max-width: 768px) {
+  .rtd-nav {
+    position: relative;
+    width: 100%;
+    top: auto; bottom: auto; left: auto;
+  }
+  .rtd-wrapper    { flex-direction: column; }
+  .rtd-content    { margin-left: 0; }
+  .rtd-article    { padding: 24px 20px 60px; }
+}

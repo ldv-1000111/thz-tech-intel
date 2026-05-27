@@ -12,10 +12,9 @@ html_title = "THZ Tech Intel"
 html_theme_options = {
     "sidebar_hide_name": False,
     "light_css_variables": {
-        # force dark even if system is light
         "color-background-primary":   "#080808",
         "color-background-secondary": "#0f0f0f",
-        "color-foreground-primary":   "#f0f0f0",
+        "color-foreground-primary":   "#cccccc",
         "color-brand-primary":        "#1BEA9A",
         "color-brand-content":        "#1BEA9A",
         "color-sidebar-background":   "#0f0f0f",
@@ -25,7 +24,7 @@ html_theme_options = {
     "dark_css_variables": {
         "color-background-primary":   "#080808",
         "color-background-secondary": "#0f0f0f",
-        "color-foreground-primary":   "#f0f0f0",
+        "color-foreground-primary":   "#cccccc",
         "color-brand-primary":        "#1BEA9A",
         "color-brand-content":        "#1BEA9A",
         "color-sidebar-background":   "#0f0f0f",
@@ -36,28 +35,33 @@ html_theme_options = {
         {
             "name": "Teradar",
             "url": "https://teradar.com",
-            "html": "<strong style='color:#1BEA9A;font-family:Syne,sans-serif;font-weight:800;letter-spacing:.1em;'>TERADAR</strong>",
+            "html": "<span style='font-family:Syne,sans-serif;font-weight:800;font-size:0.8rem;letter-spacing:.12em;color:#1BEA9A;text-transform:uppercase;'>TERADAR</span>",
             "class": "",
         },
     ],
 }
 
 html_static_path = ["_static"]
+
+# Load order: base → layout → components → rtd-theme (Furo overrides last)
 html_css_files = [
     "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap",
-    "teradar-docs.css",
+    "base.css",
+    "layout.css",
+    "components.css",
+    "rtd-theme.css",
 ]
 
 # ── reveal.js ───────────────────────────────────────────────
 revealjs_theme = "black"
 revealjs_script_conf = {
-    "controls":     True,
-    "progress":     True,
-    "slideNumber":  True,
-    "transition":   "fade",
-    "hash":         True,
-    "center":       True,
+    "controls":             True,
+    "progress":             True,
+    "slideNumber":          True,
+    "transition":           "fade",
     "backgroundTransition": "fade",
+    "hash":                 True,
+    "center":               True,
 }
 revealjs_css_files   = ["custom.css"]
 revealjs_static_path = ["_static"]

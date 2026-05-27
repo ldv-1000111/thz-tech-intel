@@ -1,0 +1,192 @@
+/* ============================================================
+   components.css — Code blocks, admonitions, tables, steps
+   Teradar Technology Intelligence theme
+   ============================================================ */
+
+/* ── Inline code ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--rtd-code-bg);
+  border: 1px solid var(--rtd-code-border);
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: var(--rtd-nav-active);
+}
+
+/* ── Code blocks ── */
+pre {
+  background: #0d0d0d;
+  border: 1px solid var(--rtd-border);
+  border-left: 3px solid var(--rtd-nav-active);
+  border-radius: 0 4px 4px 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin: 14px 0 20px;
+  position: relative;
+}
+
+pre code {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #d4d4d4;
+  line-height: 1.65;
+}
+
+/* Syntax colour hints */
+pre .comment { color: #4a5568; font-style: italic; }
+pre .keyword  { color: #1BEA9A; }
+pre .string   { color: #9ae6b4; }
+pre .var      { color: #fc8181; }
+pre .flag     { color: #63b3ed; }
+pre .value    { color: #f6ad55; }
+
+/* ── Copy button ── */
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: #141414;
+  color: var(--rtd-text-light);
+  border: 1px solid var(--rtd-border);
+  border-radius: 3px;
+  font-size: 10px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+
+.copy-btn:hover {
+  background: #1a1a1a;
+  color: var(--rtd-nav-active);
+  border-color: var(--rtd-nav-active);
+}
+
+/* ── Admonitions ── */
+.admonition {
+  border-left: 3px solid;
+  border-radius: 0 4px 4px 0;
+  padding: 14px 18px;
+  margin: 20px 0;
+  font-size: 14.5px;
+  background: var(--rtd-note-bg);
+}
+
+.admonition-title {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--rtd-nav-active);
+}
+
+.admonition.note {
+  background: var(--rtd-note-bg);
+  border-color: var(--rtd-note-border);
+}
+
+.admonition.warning {
+  background: var(--rtd-warning-bg);
+  border-color: var(--rtd-warning-border);
+}
+.admonition.warning .admonition-title {
+  color: #f5a623;
+}
+
+.admonition.success {
+  background: var(--rtd-success-bg);
+  border-color: var(--rtd-success-border);
+}
+
+/* ── Tables ── */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0 24px;
+  font-size: 14px;
+}
+
+th {
+  background: #0f0f0f;
+  color: var(--rtd-nav-active);
+  padding: 10px 14px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--rtd-border);
+}
+
+td {
+  padding: 9px 14px;
+  border: 1px solid var(--rtd-border);
+  color: #bbb;
+  vertical-align: middle;
+}
+
+tr:nth-child(even) td {
+  background: #0d0d0d;
+}
+
+tr:nth-child(odd) td {
+  background: #0a0a0a;
+}
+
+tr:hover td {
+  background: #141414;
+}
+
+td:first-child {
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+td code {
+  font-size: 0.82em;
+}
+
+/* ── Step indicator blocks ── */
+.step-block {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0;
+  align-items: flex-start;
+}
+
+.step-num {
+  background: transparent;
+  color: var(--rtd-nav-active);
+  border: 1px solid var(--rtd-nav-active);
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h3 {
+  margin-top: 0;
+}

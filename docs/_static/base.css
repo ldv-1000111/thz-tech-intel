@@ -1,0 +1,174 @@
+/* ============================================================
+   base.css — Reset, CSS variables, and typography
+   Teradar Technology Intelligence theme
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  --rtd-nav-bg:            #0f0f0f;
+  --rtd-nav-hover:         #1a1a1a;
+  --rtd-nav-active:        #1BEA9A;
+  --rtd-nav-text:          #888888;
+  --rtd-nav-text-active:   #ffffff;
+  --rtd-content-bg:        #080808;
+  --rtd-sidebar-bg:        #0f0f0f;
+  --rtd-border:            #1e1e1e;
+  --rtd-text:              #cccccc;
+  --rtd-text-light:        #666666;
+  --rtd-link:              #1BEA9A;
+  --rtd-link-hover:        #0fd47f;
+  --rtd-code-bg:           #141414;
+  --rtd-code-border:       #222222;
+  --rtd-note-bg:           #0a1f15;
+  --rtd-note-border:       #1BEA9A;
+  --rtd-warning-bg:        #1f160a;
+  --rtd-warning-border:    #f5a623;
+  --rtd-success-bg:        #0a1f12;
+  --rtd-success-border:    #1BEA9A;
+  --rtd-header-bg:         #0a0a0a;
+  --sidebar-width:         260px;
+  --content-max:           840px;
+  --font-display:          'Syne', sans-serif;
+  --font-body:             'Inter', sans-serif;
+  --font-mono:             'DM Mono', monospace;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ── */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--rtd-text);
+  background: var(--rtd-content-bg);
+  line-height: 1.75;
+}
+
+/* ── Typography ── */
+h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  border-bottom: 1px solid var(--rtd-border);
+  padding-bottom: 14px;
+  margin-bottom: 28px;
+  margin-top: 0;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  border-bottom: none;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--rtd-nav-active);
+  padding-bottom: 0;
+  margin-top: 44px;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--rtd-nav-active);
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--rtd-text-light);
+  margin-top: 20px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+p {
+  margin-bottom: 14px;
+  color: var(--rtd-text);
+}
+
+a {
+  color: var(--rtd-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--rtd-link-hover);
+}
+
+ul, ol {
+  padding-left: 24px;
+  margin-bottom: 14px;
+}
+
+li {
+  margin-bottom: 5px;
+  color: var(--rtd-text);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rtd-border);
+  margin: 32px 0;
+}
+
+/* ── Section anchor links ── */
+h2 .anchor,
+h3 .anchor {
+  opacity: 0;
+  color: #333;
+  font-size: 0.8em;
+  margin-left: 8px;
+  transition: opacity 0.15s;
+}
+
+h2:hover .anchor,
+h3:hover .anchor {
+  opacity: 1;
+}
+
+/* ── Utility ── */
+.check { color: var(--rtd-nav-active); font-weight: 700; }
+.cross { color: #e74c3c; font-weight: 700; }
+
+.result-ok {
+  display: inline-block;
+  background: var(--rtd-success-bg);
+  color: var(--rtd-nav-active);
+  border: 1px solid var(--rtd-nav-active);
+  border-radius: 3px;
+  padding: 1px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--rtd-nav-bg); }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1BEA9A33; }
+
+/* ── Selection ── */
+::selection {
+  background: var(--rtd-nav-active);
+  color: #080808;
+}
