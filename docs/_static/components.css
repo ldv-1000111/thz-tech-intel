@@ -1,25 +1,24 @@
 /* ============================================================
    components.css — Code blocks, admonitions, tables, steps
-   Teradar Technology Intelligence theme
+   HPE Server Docs theme
    ============================================================ */
 
 /* ── Inline code ── */
 code {
-  font-family: var(--font-mono);
-  font-size: 0.82em;
+  font-family: 'Source Code Pro', 'Consolas', monospace;
+  font-size: 0.875em;
   background: var(--rtd-code-bg);
   border: 1px solid var(--rtd-code-border);
   border-radius: 3px;
-  padding: 1px 6px;
-  color: var(--rtd-nav-active);
+  padding: 1px 5px;
+  color: #c0392b;
 }
 
 /* ── Code blocks ── */
 pre {
-  background: #0d0d0d;
-  border: 1px solid var(--rtd-border);
-  border-left: 3px solid var(--rtd-nav-active);
-  border-radius: 0 4px 4px 0;
+  background: #1e2a35;
+  border: 1px solid #2c3e50;
+  border-radius: 6px;
   padding: 18px 20px;
   overflow-x: auto;
   margin: 14px 0 20px;
@@ -27,73 +26,70 @@ pre {
 }
 
 pre code {
-  font-family: var(--font-mono);
-  font-size: 0.83rem;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.85rem;
   background: none;
   border: none;
   padding: 0;
-  color: #d4d4d4;
-  line-height: 1.65;
+  color: #abb2bf;
+  line-height: 1.6;
 }
 
-/* Syntax colour hints */
-pre .comment { color: #4a5568; font-style: italic; }
-pre .keyword  { color: #1BEA9A; }
-pre .string   { color: #9ae6b4; }
-pre .var      { color: #fc8181; }
-pre .flag     { color: #63b3ed; }
-pre .value    { color: #f6ad55; }
+/* Syntax colour hints — apply via <span class="..."> inside <pre><code> */
+pre .comment { color: #5c6370; font-style: italic; }
+pre .keyword  { color: #c678dd; }
+pre .string   { color: #98c379; }
+pre .var      { color: #e06c75; }
+pre .flag     { color: #61afef; }
+pre .value    { color: #d19a66; }
 
 /* ── Copy button ── */
 .copy-btn {
   position: absolute;
   top: 8px;
   right: 10px;
-  background: #141414;
-  color: var(--rtd-text-light);
-  border: 1px solid var(--rtd-border);
-  border-radius: 3px;
-  font-size: 10px;
+  background: #2c3e50;
+  color: #8899aa;
+  border: 1px solid #3d5166;
+  border-radius: 4px;
+  font-size: 11px;
   padding: 3px 10px;
   cursor: pointer;
-  font-family: var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: 'Source Sans 3', sans-serif;
   transition: all 0.15s;
 }
 
 .copy-btn:hover {
-  background: #1a1a1a;
-  color: var(--rtd-nav-active);
-  border-color: var(--rtd-nav-active);
+  background: #3d5166;
+  color: white;
 }
 
-/* ── Admonitions ── */
+/* ── Admonitions (note / warning / success) ── */
 .admonition {
-  border-left: 3px solid;
+  border-left: 4px solid;
   border-radius: 0 4px 4px 0;
-  padding: 14px 18px;
+  padding: 14px 16px;
   margin: 20px 0;
-  font-size: 14.5px;
-  background: var(--rtd-note-bg);
+  font-size: 15px;
 }
 
 .admonition-title {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 10px;
+  font-weight: 700;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 8px;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--rtd-nav-active);
 }
 
 .admonition.note {
   background: var(--rtd-note-bg);
   border-color: var(--rtd-note-border);
+}
+.admonition.note .admonition-title {
+  color: #1a6998;
 }
 
 .admonition.warning {
@@ -101,12 +97,15 @@ pre .value    { color: #f6ad55; }
   border-color: var(--rtd-warning-border);
 }
 .admonition.warning .admonition-title {
-  color: #f5a623;
+  color: #b7770d;
 }
 
 .admonition.success {
   background: var(--rtd-success-bg);
   border-color: var(--rtd-success-border);
+}
+.admonition.success .admonition-title {
+  color: #1e8449;
 }
 
 /* ── Tables ── */
@@ -114,44 +113,30 @@ table {
   border-collapse: collapse;
   width: 100%;
   margin: 16px 0 24px;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 
 th {
-  background: #0f0f0f;
-  color: var(--rtd-nav-active);
+  background: #2c3e50;
+  color: white;
   padding: 10px 14px;
   text-align: left;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border: 1px solid var(--rtd-border);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 td {
   padding: 9px 14px;
-  border: 1px solid var(--rtd-border);
-  color: #bbb;
-  vertical-align: middle;
+  border-bottom: 1px solid var(--rtd-border);
 }
 
 tr:nth-child(even) td {
-  background: #0d0d0d;
-}
-
-tr:nth-child(odd) td {
-  background: #0a0a0a;
+  background: #f8f9fa;
 }
 
 tr:hover td {
-  background: #141414;
-}
-
-td:first-child {
-  font-weight: 500;
-  color: #f0f0f0;
+  background: #f0f4f8;
 }
 
 td code {
@@ -167,18 +152,16 @@ td code {
 }
 
 .step-num {
-  background: transparent;
-  color: var(--rtd-nav-active);
-  border: 1px solid var(--rtd-nav-active);
-  width: 28px;
-  height: 28px;
-  border-radius: 2px;
+  background: var(--rtd-nav-active);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 14px;
   flex-shrink: 0;
   margin-top: 2px;
 }

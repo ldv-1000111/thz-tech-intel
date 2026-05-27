@@ -1,231 +1,134 @@
 /* ============================================================
-   rtd-theme.css — Furo variable overrides for Teradar brand
-   Forces dark theme by overriding Furo's CSS custom properties
+   rtd-theme.css — ReadTheDocs chrome: fonts, version badge,
+                   nav section titles, scrollbar styling,
+                   and TOC scroll-highlight behaviour.
+   HPE Server Docs theme
+   ============================================================
+
+   FONT IMPORT
+   -----------
+   Add this line in your <head> BEFORE loading any CSS file:
+
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap">
+
+   LOAD ORDER
+   ----------
+   <link rel="stylesheet" href="css/base.css">
+   <link rel="stylesheet" href="css/layout.css">
+   <link rel="stylesheet" href="css/components.css">
+   <link rel="stylesheet" href="css/rtd-theme.css">
+
+   JS SCROLL HIGHLIGHT
+   -------------------
+   Place this script at the bottom of <body> to activate the
+   right-hand TOC scroll-highlight behaviour:
+
+   <script>
+     const sections = document.querySelectorAll('h2[id], h3[id]');
+     const tocLinks = document.querySelectorAll('.rtd-toc a');
+     window.addEventListener('scroll', () => {
+       let current = '';
+       sections.forEach(s => {
+         if (window.scrollY >= s.offsetTop - 80) current = s.id;
+       });
+       tocLinks.forEach(a => {
+         const active = a.getAttribute('href') === '#' + current;
+         a.style.color            = active ? 'var(--rtd-link)' : '';
+         a.style.borderLeftColor  = active ? 'var(--rtd-link)' : '';
+       });
+     });
+   </script>
+
+   COPY BUTTON JS
+   --------------
+   <script>
+     function copyCode(btn) {
+       const pre = btn.parentElement.querySelector('pre')
+                || btn.closest('div').querySelector('pre');
+       navigator.clipboard.writeText(pre ? pre.innerText : '').then(() => {
+         btn.textContent = 'Copied!';
+         setTimeout(() => btn.textContent = 'Copy', 2000);
+       });
+     }
+   </script>
    ============================================================ */
 
-/* ── Override ALL Furo color variables at root level ── */
-body,
-body[data-theme=light],
-body[data-theme=dark],
-body[data-theme=auto] {
-  /* backgrounds */
-  --color-background-primary:            #080808 !important;
-  --color-background-secondary:          #0f0f0f !important;
-  --color-background-hover:              #141414 !important;
-  --color-background-hover--transparent: #14141400 !important;
-  --color-background-border:             #1e1e1e !important;
-  --color-background-item:               #1e1e1e !important;
-
-  /* foreground */
-  --color-foreground-primary:   #f0f0f0 !important;
-  --color-foreground-secondary: #aaaaaa !important;
-  --color-foreground-muted:     #666666 !important;
-  --color-foreground-border:    #2a2a2a !important;
-
-  /* brand */
-  --color-brand-primary:  #1BEA9A !important;
-  --color-brand-content:  #1BEA9A !important;
-  --color-brand-visited:  #0fd47f !important;
-
-  /* sidebar */
-  --color-sidebar-background:            #0f0f0f !important;
-  --color-sidebar-background-border:     #1e1e1e !important;
-  --color-sidebar-brand-text:            #1BEA9A !important;
-  --color-sidebar-caption-text:          #1BEA9A !important;
-  --color-sidebar-link-text:             #888888 !important;
-  --color-sidebar-link-text--top-level:  #1BEA9A !important;
-  --color-sidebar-item-background:       #0f0f0f !important;
-  --color-sidebar-item-background--current: #0a1f15 !important;
-  --color-sidebar-item-background--hover: linear-gradient(90deg,#14141400 0%,#141414 1rem,#141414 100%) !important;
-  --color-sidebar-search-background:       #141414 !important;
-  --color-sidebar-search-background--focus:#1a1a1a !important;
-  --color-sidebar-search-border:           #222222 !important;
-  --color-sidebar-search-icon:             #666666 !important;
-
-  /* toc */
-  --color-toc-background:       #080808 !important;
-  --color-toc-title-text:       #1BEA9A !important;
-  --color-toc-item-text:        #666666 !important;
-  --color-toc-item-text--hover: #f0f0f0 !important;
-  --color-toc-item-text--active:#1BEA9A !important;
-
-  /* content */
-  --color-content-foreground: #cccccc !important;
-  --color-content-background: transparent !important;
-
-  /* links */
-  --color-link:                 #1BEA9A !important;
-  --color-link-underline:       #1e1e1e !important;
-  --color-link--hover:          #0fd47f !important;
-  --color-link-underline--hover:#1BEA9A !important;
-  --color-link--visited:        #0fd47f !important;
-
-  /* header */
-  --color-header-background: #0a0a0a !important;
-  --color-header-border:      #1e1e1e !important;
-  --color-header-text:        #f0f0f0 !important;
-
-  /* tables */
-  --color-table-header-background: #0f0f0f !important;
-  --color-table-border:             #1e1e1e !important;
-
-  /* admonitions */
-  --color-admonition-background:          #0a1f15 !important;
-  --color-admonition-title:               #1BEA9A !important;
-  --color-admonition-title-background:    rgba(27,234,154,.15) !important;
-  --color-admonition-title--note:         #1BEA9A !important;
-  --color-admonition-title-background--note: rgba(27,234,154,.12) !important;
-
-  /* inline code */
-  --color-inline-code-background: #141414 !important;
-
-  /* fonts */
-  --font-stack:           'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-  --font-stack--monospace:'DM Mono', 'SFMono-Regular', Menlo, monospace !important;
-  --font-stack--headings: 'Syne', sans-serif !important;
+/* ── Google Fonts fallback stack ── */
+body {
+  font-family: 'Source Sans 3', 'Lato', 'Segoe UI', -apple-system,
+               BlinkMacSystemFont, sans-serif;
 }
 
-/* ── Force html/body background ── */
-html, body, .page, .skip-to-content {
-  background: #080808 !important;
-  color: #cccccc !important;
+code, pre code, .copy-btn {
+  font-family: 'Source Code Pro', 'Consolas', 'Courier New', monospace;
 }
 
-/* ── Sidebar brand text ── */
-.sidebar-brand-text {
-  font-family: 'Syne', sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 0.82rem !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  white-space: nowrap !important;
-  color: #1BEA9A !important;
+/* ── Nav section titles ── */
+.nav-section-title {
+  color: #8899aa;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 16px 20px 6px;
+  /* Visually separates groups in the left sidebar */
 }
 
-/* ── Sidebar caption labels ── */
-.sidebar-tree .caption,
-.sidebar-tree :not(.caption) > .caption-text {
-  font-family: 'DM Mono', monospace !important;
-  font-size: 0.65rem !important;
-  letter-spacing: 0.14em !important;
-  color: #1BEA9A !important;
+/* ── Scrollbar styling (WebKit) ── */
+.rtd-nav::-webkit-scrollbar       { width: 4px; }
+.rtd-nav::-webkit-scrollbar-track { background: transparent; }
+.rtd-nav::-webkit-scrollbar-thumb { background: #4a6080; border-radius: 2px; }
+
+/* ── Version badge in header ── */
+.rtd-header .version-badge {
+  background: var(--rtd-nav-active);
+  color: white;
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-/* ── Article headings ── */
-article h1, .content h1 {
-  font-family: 'Syne', sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 2.1rem !important;
-  color: #ffffff !important;
-  letter-spacing: -0.02em !important;
-  border-bottom: 1px solid #1e1e1e !important;
+/* ── Accent colour on project name ── */
+.rtd-header .project-name span {
+  color: #5dade2;
 }
 
-article h2, .content h2 {
-  font-family: 'Syne', sans-serif !important;
-  font-weight: 700 !important;
-  color: #f0f0f0 !important;
-  border-left: 3px solid #1BEA9A !important;
-  border-bottom: none !important;
-  padding-left: 0.8rem !important;
-  letter-spacing: -0.01em !important;
-  margin-left: -0.5rem !important;
+/* ── Active nav link highlight ── */
+.rtd-nav a.active {
+  background: rgba(41, 128, 185, 0.15);
+  color: #ffffff;
+  border-left-color: var(--rtd-nav-active);
+  font-weight: 600;
 }
 
-article h3, .content h3 {
-  font-family: 'Syne', sans-serif !important;
-  font-weight: 600 !important;
-  color: #1BEA9A !important;
+/* ── Left nav hover accent ── */
+.rtd-nav a:hover {
+  border-left-color: #5dade2;
 }
 
-article h4, .content h4 {
-  font-family: 'DM Mono', monospace !important;
-  font-size: 0.72rem !important;
-  color: #666 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
+/* ── Right TOC active state (set via JS) ── */
+.rtd-toc a[data-active="true"] {
+  color: var(--rtd-link);
+  border-left-color: var(--rtd-link);
 }
 
-/* ── Body text ── */
-article p, article li,
-.content p, .content li {
-  color: #cccccc !important;
-  font-weight: 300 !important;
+/* ── Responsive: collapse right TOC below 1200 px ── */
+@media (max-width: 1199px) {
+  .rtd-toc { display: none; }
 }
 
-/* ── Tables ── */
-table.docutils th {
-  background: #0f0f0f !important;
-  color: #1BEA9A !important;
-  font-family: 'DM Mono', monospace !important;
-  font-size: 0.72rem !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-  border: 1px solid #1e1e1e !important;
-}
-
-table.docutils td {
-  border: 1px solid #1e1e1e !important;
-  color: #bbb !important;
-}
-
-table.docutils tr:nth-child(even) td { background: #0d0d0d !important; }
-table.docutils tr:nth-child(odd) td  { background: #0a0a0a !important; }
-table.docutils tr:hover td           { background: #141414 !important; }
-table.docutils td:first-child        { color: #f0f0f0 !important; font-weight: 500 !important; }
-
-/* ── Code ── */
-code.literal, .sig-inline {
-  background: #141414 !important;
-  color: #1BEA9A !important;
-  border: 1px solid #1e1e1e !important;
-  font-family: 'DM Mono', monospace !important;
-}
-
-.highlight pre {
-  background: #0d0d0d !important;
-  border-left: 3px solid #1BEA9A !important;
-  border-radius: 0 4px 4px 0 !important;
-}
-
-/* ── Admonitions ── */
-.admonition {
-  background: #0a1f15 !important;
-  border-left-color: #1BEA9A !important;
-}
-
-p.admonition-title {
-  background: rgba(27,234,154,.12) !important;
-  color: #1BEA9A !important;
-}
-
-/* ── Prev/next navigation ── */
-.related-pages a {
-  color: #cccccc !important;
-}
-
-.bottom-of-page {
-  border-top: 1px solid #1e1e1e !important;
-  color: #666 !important;
-}
-
-/* ── Hide EthicalAds ── */
-.ethical-sidebar, .ethical-ads,
-[data-ea-publisher], #ethical-ad-placement {
-  display: none !important;
-}
-
-/* ── Hide RTD flyout on slides ── */
-readthedocs-flyout { display: none !important; }
-
-/* ── Scrollbar ── */
-* {
-  scrollbar-color: #2a2a2a #080808;
-  scrollbar-width: thin;
-}
-
-/* ── Selection ── */
-::selection {
-  background: #1BEA9A !important;
-  color: #080808 !important;
+/* ── Responsive: stack layout on small screens ── */
+@media (max-width: 768px) {
+  .rtd-nav {
+    position: relative;
+    width: 100%;
+    top: auto;
+    bottom: auto;
+    left: auto;
+  }
+  .rtd-wrapper    { flex-direction: column; }
+  .rtd-content    { margin-left: 0; }
+  .rtd-article    { padding: 24px 20px 60px; }
 }

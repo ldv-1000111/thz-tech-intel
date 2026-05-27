@@ -11,32 +11,12 @@ html_title = "THZ Tech Intel"
 
 html_theme_options = {
     "sidebar_hide_name": False,
-    "default_mode": "dark",
-    "light_css_variables": {
-        "color-background-primary":   "#080808",
-        "color-background-secondary": "#0f0f0f",
-        "color-foreground-primary":   "#cccccc",
-        "color-brand-primary":        "#1BEA9A",
-        "color-brand-content":        "#1BEA9A",
-        "color-sidebar-background":   "#0f0f0f",
-        "font-stack":                 "'Inter', sans-serif",
-        "font-stack--monospace":      "'DM Mono', monospace",
-    },
-    "dark_css_variables": {
-        "color-background-primary":   "#080808",
-        "color-background-secondary": "#0f0f0f",
-        "color-foreground-primary":   "#cccccc",
-        "color-brand-primary":        "#1BEA9A",
-        "color-brand-content":        "#1BEA9A",
-        "color-sidebar-background":   "#0f0f0f",
-        "font-stack":                 "'Inter', sans-serif",
-        "font-stack--monospace":      "'DM Mono', monospace",
-    },
+    "default_mode": "light",
     "footer_icons": [
         {
             "name": "Teradar",
             "url": "https://teradar.com",
-            "html": "<span style='font-family:Syne,sans-serif;font-weight:800;font-size:0.8rem;letter-spacing:.12em;color:#1BEA9A;text-transform:uppercase;'>TERADAR</span>",
+            "html": "<span style='font-weight:700;font-size:0.8rem;letter-spacing:.05em;'>TERADAR</span>",
             "class": "",
         },
     ],
@@ -44,16 +24,16 @@ html_theme_options = {
 
 html_static_path = ["_static"]
 
-# Load order: base → layout → components → rtd-theme (Furo overrides last)
+# HPE CSS stack — load order matters
 html_css_files = [
-    "https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap",
+    "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap",
     "base.css",
     "layout.css",
     "components.css",
     "rtd-theme.css",
 ]
 
-# ── reveal.js ───────────────────────────────────────────────
+# ── reveal.js (keep Teradar dark slides) ─────────────────────
 revealjs_theme = "black"
 revealjs_script_conf = {
     "controls":             True,
