@@ -1,0 +1,4 @@
+/* Hide RTD EthicalAds */
+.ethical-sidebar, .ethical-ads, [data-ea-publisher],
+#ethical-ad-placement, .ea-type-image, .ea-type-text,
+readthedocs-flyout { display: none !important; }
