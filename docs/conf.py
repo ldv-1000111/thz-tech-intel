@@ -5,19 +5,22 @@ release = "1.0"
 
 extensions = ["sphinx_revealjs"]
 
-# ── HTML — Furo with HPE style override (Option A from HOWTO) ──
-html_theme = "furo"
+# ── HTML — sphinx_rtd_theme (what HPE HOWTO was written for) ──
+html_theme = "sphinx_rtd_theme"
 html_title = "THZ Tech Intel"
 
 html_theme_options = {
-    "sidebar_hide_name": False,
-    "default_mode": "light",
+    "navigation_depth": 4,
+    "collapse_navigation": False,
+    "sticky_navigation": True,
+    "includehidden": True,
+    "titles_only": False,
 }
 
 html_static_path  = ["_static"]
 templates_path    = ["_templates"]
 
-# Option A: base + components + rtd-theme only (no layout.css)
+# Option A per HOWTO: base + components + rtd-theme (no layout.css)
 html_css_files = [
     "css/base.css",
     "css/components.css",
