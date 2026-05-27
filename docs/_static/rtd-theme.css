@@ -1,248 +1,231 @@
 /* ============================================================
-   rtd-theme.css — Furo overrides: fonts, sidebar, version badge,
-                   nav section titles, scrollbar, TOC highlight
-   Teradar Technology Intelligence theme
+   rtd-theme.css — Furo variable overrides for Teradar brand
+   Forces dark theme by overriding Furo's CSS custom properties
    ============================================================ */
 
-/* ── Force dark background everywhere ── */
+/* ── Override ALL Furo color variables at root level ── */
 body,
-.page,
-.sidebar-drawer,
-.sidebar-container,
-.sidebar-scroll,
-.content,
-article,
-.content-container {
-  background: var(--rtd-content-bg) !important;
-  color: var(--rtd-text) !important;
+body[data-theme=light],
+body[data-theme=dark],
+body[data-theme=auto] {
+  /* backgrounds */
+  --color-background-primary:            #080808 !important;
+  --color-background-secondary:          #0f0f0f !important;
+  --color-background-hover:              #141414 !important;
+  --color-background-hover--transparent: #14141400 !important;
+  --color-background-border:             #1e1e1e !important;
+  --color-background-item:               #1e1e1e !important;
+
+  /* foreground */
+  --color-foreground-primary:   #f0f0f0 !important;
+  --color-foreground-secondary: #aaaaaa !important;
+  --color-foreground-muted:     #666666 !important;
+  --color-foreground-border:    #2a2a2a !important;
+
+  /* brand */
+  --color-brand-primary:  #1BEA9A !important;
+  --color-brand-content:  #1BEA9A !important;
+  --color-brand-visited:  #0fd47f !important;
+
+  /* sidebar */
+  --color-sidebar-background:            #0f0f0f !important;
+  --color-sidebar-background-border:     #1e1e1e !important;
+  --color-sidebar-brand-text:            #1BEA9A !important;
+  --color-sidebar-caption-text:          #1BEA9A !important;
+  --color-sidebar-link-text:             #888888 !important;
+  --color-sidebar-link-text--top-level:  #1BEA9A !important;
+  --color-sidebar-item-background:       #0f0f0f !important;
+  --color-sidebar-item-background--current: #0a1f15 !important;
+  --color-sidebar-item-background--hover: linear-gradient(90deg,#14141400 0%,#141414 1rem,#141414 100%) !important;
+  --color-sidebar-search-background:       #141414 !important;
+  --color-sidebar-search-background--focus:#1a1a1a !important;
+  --color-sidebar-search-border:           #222222 !important;
+  --color-sidebar-search-icon:             #666666 !important;
+
+  /* toc */
+  --color-toc-background:       #080808 !important;
+  --color-toc-title-text:       #1BEA9A !important;
+  --color-toc-item-text:        #666666 !important;
+  --color-toc-item-text--hover: #f0f0f0 !important;
+  --color-toc-item-text--active:#1BEA9A !important;
+
+  /* content */
+  --color-content-foreground: #cccccc !important;
+  --color-content-background: transparent !important;
+
+  /* links */
+  --color-link:                 #1BEA9A !important;
+  --color-link-underline:       #1e1e1e !important;
+  --color-link--hover:          #0fd47f !important;
+  --color-link-underline--hover:#1BEA9A !important;
+  --color-link--visited:        #0fd47f !important;
+
+  /* header */
+  --color-header-background: #0a0a0a !important;
+  --color-header-border:      #1e1e1e !important;
+  --color-header-text:        #f0f0f0 !important;
+
+  /* tables */
+  --color-table-header-background: #0f0f0f !important;
+  --color-table-border:             #1e1e1e !important;
+
+  /* admonitions */
+  --color-admonition-background:          #0a1f15 !important;
+  --color-admonition-title:               #1BEA9A !important;
+  --color-admonition-title-background:    rgba(27,234,154,.15) !important;
+  --color-admonition-title--note:         #1BEA9A !important;
+  --color-admonition-title-background--note: rgba(27,234,154,.12) !important;
+
+  /* inline code */
+  --color-inline-code-background: #141414 !important;
+
+  /* fonts */
+  --font-stack:           'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  --font-stack--monospace:'DM Mono', 'SFMono-Regular', Menlo, monospace !important;
+  --font-stack--headings: 'Syne', sans-serif !important;
 }
 
-/* ── Sidebar ── */
-.sidebar-drawer,
-.sidebar-container,
-.sidebar-scroll {
-  background: var(--rtd-nav-bg) !important;
-  border-right: 1px solid var(--rtd-border) !important;
+/* ── Force html/body background ── */
+html, body, .page, .skip-to-content {
+  background: #080808 !important;
+  color: #cccccc !important;
 }
 
-/* ── Sidebar brand ── */
-.sidebar-brand {
-  border-bottom: 1px solid var(--rtd-border) !important;
-  padding: 1.1rem 1rem !important;
-}
-
+/* ── Sidebar brand text ── */
 .sidebar-brand-text {
-  font-family: var(--font-display) !important;
-  font-size: 0.82rem !important;
+  font-family: 'Syne', sans-serif !important;
   font-weight: 800 !important;
-  color: var(--rtd-nav-active) !important;
+  font-size: 0.82rem !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   white-space: nowrap !important;
+  color: #1BEA9A !important;
 }
 
-/* ── Sidebar nav links ── */
-.sidebar-tree a,
-.sidebar-tree label {
-  font-family: var(--font-body) !important;
-  font-size: 0.8rem !important;
-  font-weight: 400 !important;
-  color: var(--rtd-nav-text) !important;
-}
-
-.sidebar-tree a:hover {
-  color: #ffffff !important;
-  background: var(--rtd-nav-hover) !important;
-}
-
-.sidebar-tree .current-page > a {
-  color: #ffffff !important;
-  border-left: 2px solid var(--rtd-nav-active) !important;
-  background: #0a1f15 !important;
-  font-weight: 500 !important;
-}
-
-/* ── Sidebar section captions ── */
+/* ── Sidebar caption labels ── */
 .sidebar-tree .caption,
-.sidebar-tree p.caption {
-  font-family: var(--font-mono) !important;
+.sidebar-tree :not(.caption) > .caption-text {
+  font-family: 'DM Mono', monospace !important;
   font-size: 0.65rem !important;
-  color: var(--rtd-nav-active) !important;
-  text-transform: uppercase !important;
   letter-spacing: 0.14em !important;
-  margin-top: 1.4rem !important;
-  padding-bottom: 0.2rem !important;
+  color: #1BEA9A !important;
 }
 
-/* ── Top mobile header ── */
-.mobile-header,
-.header-bar {
-  background: var(--rtd-header-bg) !important;
-  border-bottom: 1px solid var(--rtd-border) !important;
-}
-
-/* ── Article headings (Furo overrides) ── */
-article h1 {
-  font-family: var(--font-display) !important;
-  font-size: 2.2rem !important;
+/* ── Article headings ── */
+article h1, .content h1 {
+  font-family: 'Syne', sans-serif !important;
   font-weight: 800 !important;
+  font-size: 2.1rem !important;
   color: #ffffff !important;
-  border-bottom: 1px solid var(--rtd-border) !important;
   letter-spacing: -0.02em !important;
+  border-bottom: 1px solid #1e1e1e !important;
 }
 
-article h2 {
-  font-family: var(--font-display) !important;
-  font-size: 1.35rem !important;
+article h2, .content h2 {
+  font-family: 'Syne', sans-serif !important;
   font-weight: 700 !important;
   color: #f0f0f0 !important;
-  border-left: 3px solid var(--rtd-nav-active) !important;
+  border-left: 3px solid #1BEA9A !important;
   border-bottom: none !important;
   padding-left: 0.8rem !important;
   letter-spacing: -0.01em !important;
+  margin-left: -0.5rem !important;
 }
 
-article h3 {
-  font-family: var(--font-display) !important;
-  font-size: 1.05rem !important;
+article h3, .content h3 {
+  font-family: 'Syne', sans-serif !important;
   font-weight: 600 !important;
-  color: var(--rtd-nav-active) !important;
+  color: #1BEA9A !important;
 }
 
-article h4 {
-  font-family: var(--font-mono) !important;
+article h4, .content h4 {
+  font-family: 'DM Mono', monospace !important;
   font-size: 0.72rem !important;
-  color: var(--rtd-text-light) !important;
+  color: #666 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.1em !important;
 }
 
 /* ── Body text ── */
-article p,
-article li,
-.content p,
-.content li {
-  font-family: var(--font-body) !important;
-  font-size: 0.9rem !important;
+article p, article li,
+.content p, .content li {
   color: #cccccc !important;
   font-weight: 300 !important;
-  line-height: 1.75 !important;
 }
 
-/* ── Links ── */
-article a,
-.content a {
-  color: var(--rtd-nav-active) !important;
-}
-
-article a:hover {
-  color: var(--rtd-link-hover) !important;
-}
-
-/* ── Admonition override ── */
-.admonition {
-  background: var(--rtd-note-bg) !important;
-  border-color: var(--rtd-nav-active) !important;
-}
-
-.admonition-title {
-  color: var(--rtd-nav-active) !important;
-}
-
-/* ── Prev / Next nav ── */
-.bottom-of-page {
-  border-top: 1px solid var(--rtd-border) !important;
-}
-
-.prev-next-area a {
-  background: var(--rtd-nav-bg) !important;
-  border: 1px solid var(--rtd-border) !important;
-  border-radius: 3px !important;
-  color: #cccccc !important;
-  font-family: var(--font-body) !important;
-  transition: border-color 0.15s !important;
-}
-
-.prev-next-area a:hover {
-  border-color: var(--rtd-nav-active) !important;
-  text-decoration: none !important;
-}
-
-/* ── Footer ── */
-footer,
-.footer,
-.bottom-of-page {
-  background: var(--rtd-nav-bg) !important;
-  border-top: 1px solid var(--rtd-border) !important;
-  font-family: var(--font-mono) !important;
-  font-size: 0.7rem !important;
-  color: var(--rtd-text-light) !important;
-}
-
-/* ── Search box ── */
-[role="search"] input {
-  background: #141414 !important;
-  border: 1px solid var(--rtd-border) !important;
-  color: #ffffff !important;
-  font-family: var(--font-body) !important;
-  border-radius: 3px !important;
-}
-
-[role="search"] input:focus {
-  border-color: var(--rtd-nav-active) !important;
-  outline: none !important;
-}
-
-/* ── RTD version flyout ── */
-.rst-versions,
-.readthedocs-flyout {
+/* ── Tables ── */
+table.docutils th {
   background: #0f0f0f !important;
-  border-top: 1px solid var(--rtd-border) !important;
-  font-family: var(--font-mono) !important;
+  color: #1BEA9A !important;
+  font-family: 'DM Mono', monospace !important;
   font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  border: 1px solid #1e1e1e !important;
+}
+
+table.docutils td {
+  border: 1px solid #1e1e1e !important;
+  color: #bbb !important;
+}
+
+table.docutils tr:nth-child(even) td { background: #0d0d0d !important; }
+table.docutils tr:nth-child(odd) td  { background: #0a0a0a !important; }
+table.docutils tr:hover td           { background: #141414 !important; }
+table.docutils td:first-child        { color: #f0f0f0 !important; font-weight: 500 !important; }
+
+/* ── Code ── */
+code.literal, .sig-inline {
+  background: #141414 !important;
+  color: #1BEA9A !important;
+  border: 1px solid #1e1e1e !important;
+  font-family: 'DM Mono', monospace !important;
+}
+
+.highlight pre {
+  background: #0d0d0d !important;
+  border-left: 3px solid #1BEA9A !important;
+  border-radius: 0 4px 4px 0 !important;
+}
+
+/* ── Admonitions ── */
+.admonition {
+  background: #0a1f15 !important;
+  border-left-color: #1BEA9A !important;
+}
+
+p.admonition-title {
+  background: rgba(27,234,154,.12) !important;
+  color: #1BEA9A !important;
+}
+
+/* ── Prev/next navigation ── */
+.related-pages a {
+  color: #cccccc !important;
+}
+
+.bottom-of-page {
+  border-top: 1px solid #1e1e1e !important;
+  color: #666 !important;
 }
 
 /* ── Hide EthicalAds ── */
-.ethical-sidebar,
-.ethical-ads,
-[data-ea-publisher],
-#ethical-ad-placement {
+.ethical-sidebar, .ethical-ads,
+[data-ea-publisher], #ethical-ad-placement {
   display: none !important;
 }
 
-/* ── Nav section titles (RTD theme class) ── */
-.nav-section-title {
-  font-family: var(--font-mono) !important;
-  color: var(--rtd-nav-active) !important;
-  font-size: 10px !important;
-  font-weight: 500 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.14em !important;
-}
+/* ── Hide RTD flyout on slides ── */
+readthedocs-flyout { display: none !important; }
 
 /* ── Scrollbar ── */
-.sidebar-scroll::-webkit-scrollbar { width: 4px; }
-.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
-.sidebar-scroll::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
-
-/* ── Right TOC active state (set via JS) ── */
-.rtd-toc a[data-active="true"] {
-  color: var(--rtd-nav-active);
-  border-left-color: var(--rtd-nav-active);
+* {
+  scrollbar-color: #2a2a2a #080808;
+  scrollbar-width: thin;
 }
 
-/* ── Responsive ── */
-@media (max-width: 1199px) {
-  .rtd-toc { display: none; }
-}
-
-@media (max-width: 768px) {
-  .rtd-nav {
-    position: relative;
-    width: 100%;
-    top: auto; bottom: auto; left: auto;
-  }
-  .rtd-wrapper    { flex-direction: column; }
-  .rtd-content    { margin-left: 0; }
-  .rtd-article    { padding: 24px 20px 60px; }
+/* ── Selection ── */
+::selection {
+  background: #1BEA9A !important;
+  color: #080808 !important;
 }

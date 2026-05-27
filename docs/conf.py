@@ -11,6 +11,7 @@ html_title = "THZ Tech Intel"
 
 html_theme_options = {
     "sidebar_hide_name": False,
+    "default_mode": "dark",
     "light_css_variables": {
         "color-background-primary":   "#080808",
         "color-background-secondary": "#0f0f0f",
