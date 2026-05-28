@@ -1,9 +1,7 @@
 Terahertz Technology Intelligence
 ===================================
 
-Welcome to the Teradar Technology Intelligence hub — a living repository of
-whitepapers, competitive analysis, and presentations covering Teradar's
-terahertz sensing platform across automotive, defense, healthcare, and security.
+Welcome to the Teradar Technology Intelligence hub.
 
 .. toctree::
    :maxdepth: 2
@@ -12,6 +10,7 @@ terahertz sensing platform across automotive, defense, healthcare, and security.
    overview
    competitive
    deep_competitive
+   financial_strategic
 
 .. toctree::
    :maxdepth: 1
