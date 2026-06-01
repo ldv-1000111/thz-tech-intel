@@ -27,13 +27,13 @@ The Seven Platforms
      - Only THz platform; 20× radar resolution; material fingerprinting; $150M Series B
    * - **Arbe Robotics**
      - 4D imaging radar (77 GHz)
-     - 2,304 virtual channels; Chinese OEM serial production win; NVIDIA DRIVE integration
+     - 2,304 virtual channels; Chinese OEM serial production; NVIDIA DRIVE integration
    * - **Mobileye**
-     - Camera + radar fusion (EyeQ6H)
-     - $1.9B 2025 revenue; $24.5B pipeline; VW robotaxi; Mentee Robotics acquisition
+     - Camera + radar + LiDAR fusion (EyeQ6H)
+     - $1.9B 2025 revenue; in-house imaging radar (SOP 2028); closed vertical stack
    * - **Innoviz**
      - Solid-state LiDAR (InnovizTwo/Three)
-     - 0.05° resolution; $55M 2025 revenue; Top-5 OEM L3 SOP 2027; NVIDIA Hyperion
+     - 0.05° resolution; $55M 2025 revenue; Top-5 OEM L3 SOP 2027; dual ecosystem
    * - **Luminar**
      - 1550 nm LiDAR (Iris/Halo)
      - Filed Chapter 11 Dec 2025; assets acquired by MicroVision; Halo IP preserved
@@ -56,8 +56,7 @@ Range Resolution
 ~~~~~~~~~~~~~~~~
 
 Range resolution is the ability to separate two objects at **different distances along
-the same radial line** — can the sensor distinguish a car at 36.0 m from a car at
-36.095 m? It is governed exclusively by the transmitted signal bandwidth:
+the same radial line**. It is governed exclusively by the transmitted signal bandwidth:
 
 .. code-block:: text
 
@@ -69,19 +68,17 @@ the same radial line** — can the sensor distinguish a car at 36.0 m from a car
      B  = swept bandwidth (Hz)
 
 Bandwidth is the **only** variable. Target distance, transmit power, and antenna size
-have no effect on range resolution. This is a hard physical law derived from the
-Fourier uncertainty principle: a signal occupying bandwidth B cannot resolve time
-differences shorter than 1/B, corresponding to a range difference of c/(2B).
+have no effect. This is a hard physical law derived from the Fourier uncertainty
+principle: a signal occupying bandwidth B cannot resolve time differences shorter
+than 1/B, corresponding to a range difference of c/(2B).
 
 In FMCW automotive radar, bandwidth equals the chirp sweep range (f_stop − f_start).
-The wider the frequency sweep, the finer the range resolution.
 
 Angular (Cross-Range) Resolution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Angular resolution is the ability to separate two objects at the **same distance but
-different lateral positions** — can the sensor distinguish a cyclist from a car 1 metre
-to its left at 200 m range? It is governed by the antenna aperture:
+different lateral positions**. It is governed by the effective antenna aperture:
 
 .. code-block:: text
 
@@ -96,17 +93,17 @@ Lateral separability at range R:
 
 .. code-block:: text
 
-   lateral separation = R × tan(θ) ≈ R × θ  (small angle approximation)
+   lateral separation ≈ R × θ  (small angle approximation)
 
-At Arbe's 1° angular resolution, lateral separability degrades linearly with range:
+At 1° angular resolution (Arbe), lateral separability at range:
 
 .. code-block:: text
 
-   100 m  →  1.7 m lateral separation required to resolve two objects
+   100 m  →  1.7 m lateral separation required
    200 m  →  3.5 m
    300 m  →  5.2 m
 
-At Teradar's 0.1° angular resolution, these figures are 10× finer at every range.
+At 0.5° (Mobileye), these figures halve. At 0.1° (Teradar), they are 10× finer.
 
 Physical vs Synthetic Aperture
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -122,79 +119,126 @@ from multiple spatially distributed antenna elements:
    virtual channels = N_TX × N_RX
 
 Each unique TX-RX pair has a different spatial baseline, synthesising a larger effective
-aperture than the physical hardware occupies. Arbe's 48 TX × 48 RX array creates 2,304
-virtual channels and achieves 1° angular resolution from a bumper-mounted device. Angular
-resolution improvement scales with aperture size — doubling virtual channels improves
-angular resolution by only √2, not ×2.
+aperture than the physical hardware occupies. Angular resolution improvement scales with
+aperture size — doubling virtual channels improves angular resolution by only √2, not ×2.
 
 At THz frequencies (~300 GHz, λ ≈ 1 mm), the same physical aperture produces
-proportionally finer angular resolution than 77 GHz radar. The shorter wavelength means
-fewer virtual channels are needed to achieve the same effective aperture — a fundamental
-physics advantage of operating at higher carrier frequency, not an engineering achievement.
+proportionally finer angular resolution than 77 GHz radar — a fundamental physics
+advantage of operating at higher carrier frequency.
 
-Sensor Resolution Comparison
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Dynamic Range — the Long-Range Detection Factor
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Dynamic range is the ratio between the largest and smallest signal the radar can process
+simultaneously. It determines the ability to detect weak distant returns in the presence
+of strong nearby returns — the critical capability for detecting a small hazard at 300 m
+while a truck passes at 20 m.
+
+.. code-block:: text
+
+   Dynamic range of 60 dB  = 1,000,000 : 1 signal power ratio
+   Dynamic range of 100 dB = 10,000,000,000 : 1 signal power ratio
+
+The 40 dB gap between standard automotive radar (60 dB) and Mobileye's imaging radar
+(100 dB) represents a 10,000× difference in simultaneous signal discrimination. This
+is what enables detection of a tyre on the highway at 230 m while simultaneously
+processing truck returns at 20 m — without receiver saturation masking distant objects.
+
+.. note::
+   Dynamic range improves long-range **detection sensitivity** but does not affect
+   range **resolution**. Two objects separated by 9 cm in depth at 300 m still cannot
+   be resolved regardless of dynamic range — only bandwidth governs that.
+
+Side-lobe suppression (−40 dBc) is the complementary metric: it determines how much
+energy the radar antenna leaks into unintended angular directions. High side lobes create
+ghost targets in cluttered environments (tunnels, construction zones, dense traffic).
+Mobileye's −40 dBc vs the industry-typical ~−20 dBc represents a 100× improvement in
+spurious target rejection.
+
+----
+
+Sensor Resolution & Performance Comparison
+--------------------------------------------
 
 .. list-table::
    :header-rows: 1
-   :widths: 18 21 16 25 20
+   :widths: 18 16 14 16 14 14 8
 
    * - Platform
-     - Angular resolution
+     - Angular res.
      - Max range
-     - Range resolution
-     - FOV (H × V)
+     - Range res.
+     - Dynamic range
+     - Side lobes
+     - FOV
    * - Teradar
-     - **0.1°** (inferred MIMO)
+     - **0.1°** (inferred)
      - 300 m
-     - **±1.5 cm** (implies ~10 GHz BW)
-     - 120° × 30°
-   * - Arbe Robotics
-     - 1° az / 1.25° el
+     - **±1.5 cm** (~10 GHz BW)
+     - Not disclosed
+     - Not disclosed
+     - 120°×30°
+   * - Arbe Phoenix
+     - 1° / 1.25°
      - 300 m+
-     - 9.5 cm @ 36 m (1.6 GHz BW)
-     - Wide (configurable)
-   * - Mobileye
-     - Sub-1° (camera)
-     - 200 m+
-     - Camera-limited
-     - 360° surround
-   * - Innoviz (InnovizTwo LR)
-     - **0.05° × 0.05°**
+     - 9.5 cm @ 36 m
+     - ~60 dB (industry std)
+     - Not published
+     - Wide
+   * - Mobileye Imaging Radar
+     - **<0.5°**
+     - **315 m**
+     - Not published (77 GHz FMCW)
+     - **100 dB**
+     - **−40 dBc**
+     - **170°**
+   * - Innoviz InnovizTwo LR
+     - **0.05°×0.05°**
      - 300 m (ULR: 1 km)
-     - cm-level (pulsed ToF)
-     - 120° × 43°
+     - cm (pulsed ToF)
+     - N/A (LiDAR)
+     - N/A
+     - 120°×43°
    * - Luminar Iris
      - 0.05° H
      - **600 m**
-     - cm-level (pulsed ToF)
-     - 120° × 30°
+     - cm (pulsed ToF)
+     - N/A (LiDAR)
+     - N/A
+     - 120°×30°
    * - Vayyar XRR
      - ~1–2°
      - 300 m
      - dm-level
+     - Not published
+     - Not published
      - Ultra-wide
    * - Cepton Vista-X90
-     - 0.1° × 0.05°
+     - 0.1°×0.05°
      - 200 m
-     - cm-level (pulsed ToF)
-     - 120° × 30°
+     - cm (pulsed ToF)
+     - N/A (LiDAR)
+     - N/A
+     - 120°×30°
 
 .. note::
    **Teradar disclosure gap.** The whitepapers state performance outputs only. The ~10 GHz
    bandwidth is back-calculated from ΔR = c/(2B). MIMO/synthetic aperture use is inferred
-   — it is the only physically plausible mechanism to achieve 0.1° at chip scale at
-   ~300 GHz. Carrier frequency (~300 GHz), TX/RX channel count, and points-per-frame are
-   not published. This is standard pre-production disclosure behaviour. OEM engineering
-   teams should request full architecture disclosure during evaluation.
+   — the only physically plausible mechanism to achieve 0.1° at chip scale. Carrier
+   frequency (~300 GHz), TX/RX channel count, points-per-frame, dynamic range, and
+   side-lobe levels are not published. Standard pre-production disclosure behaviour.
+   OEM engineering teams should request full architecture disclosure during evaluation.
+
+   **Mobileye range resolution gap.** Mobileye does not publish a bandwidth or range
+   resolution figure for its imaging radar. The 77 GHz FMCW architecture means the same
+   ΔR = c/(2B) physics apply — range resolution is bandwidth-limited regardless of
+   dynamic range. The 315 m detection range and 100 dB dynamic range are detection
+   sensitivity figures, not depth resolution figures.
 
 ----
 
 Bandwidth and Range Resolution: Carrier Frequency Effect
 ----------------------------------------------------------
-
-Higher carrier frequency enables wider absolute bandwidth at the same fractional sweep,
-directly driving range resolution improvement:
 
 .. list-table::
    :header-rows: 1
@@ -214,7 +258,12 @@ directly driving range resolution improvement:
      - 77 GHz
      - ~1.6 GHz
      - ~9.5 cm
-     - Short-range chirp mode only
+     - Short-range mode only
+   * - Mobileye Imaging Radar
+     - 77 GHz (FMCW)
+     - Not disclosed
+     - Not disclosed
+     - Detection to 315 m; ΔR physics same as Arbe
    * - 77 GHz theoretical limit
      - 77 GHz
      - 5 GHz (full band)
@@ -224,45 +273,149 @@ directly driving range resolution improvement:
      - ~300 GHz (inferred)
      - ~10 GHz (inferred)
      - ~1.5 cm
-     - Published spec; BW back-calculated
+     - Back-calculated from spec
    * - LiDAR (Innoviz/Luminar)
      - ~200 THz
      - N/A (pulsed ToF)
      - cm-level
-     - Time-of-flight, not FMCW
+     - Time-of-flight physics
 
 .. warning::
    Arbe's 9.5 cm range resolution applies **only** in its short-range wide-bandwidth
    chirp mode. In long-range mode (300 m detection), a narrower bandwidth chirp is used,
-   yielding approximately 30–75 cm range resolution — comparable to conventional radar.
-   Fine range resolution and maximum detection range cannot be achieved simultaneously
-   in a single chirp configuration. Multi-mode chirp scheduling is a fundamental
-   limitation of FMCW radar at 77 GHz.
+   yielding approximately 30–75 cm range resolution. Fine range resolution and maximum
+   detection range cannot be achieved simultaneously in a single chirp configuration.
+   This applies equally to Mobileye's 77 GHz FMCW radar — the 315 m detection range
+   is achieved with a narrow-bandwidth long-range chirp whose range resolution is
+   not published but is subject to the same physics.
 
 ----
 
-Highway Autonomy: The Angular Resolution Constraint
------------------------------------------------------
+Highway Autonomy: Binding Constraints Analysis
+------------------------------------------------
 
-At highway speeds, **angular resolution is the binding constraint** for L4/L5 perception
-— not range resolution. At 130 km/h (~36 m/s) with 300 m detection range, approximately
-8 seconds of reaction time is available. The critical question is not depth accuracy —
-it is **lateral object separability**: can the sensor resolve a motorcyclist from an
-adjacent truck at 250 m?
+At highway speeds, three distinct physical constraints determine L4/L5 viability.
+They are independent and must each be satisfied simultaneously.
 
-Arbe's 1° angular resolution at 300 m requires 5.2 m of lateral separation to resolve
-two objects. Adjacent lane vehicles may merge into a single radar return. This is a
-category constraint of 77 GHz FMCW physics — not specific to Arbe. Doubling virtual
-channels to 4,608 would improve angular resolution by only √2 (~0.7°), at doubled
-cost and power.
+**Constraint 1 — Angular resolution at range**
 
-**Where Arbe excels at highway speeds** is velocity resolution and stationary object
-detection — precise Doppler separation of dozens of simultaneous targets, and reliable
-detection of stopped vehicles or road debris that conventional radar misses entirely.
+At 130 km/h, 8 seconds of reaction time is available at 300 m. The question is whether
+the sensor can laterally separate close objects at that range:
 
-For L4/L5 highway autonomy, 77 GHz radar alone is insufficient as a primary sensor.
-It must be fused with a high-resolution sensor (LiDAR at 0.05° or THz at 0.1°).
-This is precisely the architecture the Arbe/NVIDIA partnership is designed to enable.
+.. list-table::
+   :header-rows: 1
+   :widths: 25 25 25 25
+
+   * - Sensor
+     - Angular res.
+     - Lateral sep. @ 200 m
+     - Lateral sep. @ 300 m
+   * - Teradar
+     - 0.1°
+     - 0.35 m
+     - 0.52 m
+   * - Mobileye Imaging Radar
+     - <0.5°
+     - <1.75 m
+     - <2.6 m
+   * - Arbe Phoenix
+     - 1°
+     - 3.5 m
+     - 5.2 m
+   * - Innoviz / Luminar
+     - 0.05°
+     - 0.17 m
+     - 0.26 m
+
+**Constraint 2 — Long-range detection sensitivity**
+
+Ability to detect small objects (tyre debris, pedestrian) at 200–315 m against a
+cluttered background of large vehicles. Governed by dynamic range and side-lobe
+suppression — not angular resolution or bandwidth.
+
+Mobileye's 100 dB dynamic range and −40 dBc side-lobe suppression make it the
+strongest 77 GHz radar for this constraint. Arbe's ~60 dB dynamic range is
+industry-standard but 10,000× lower simultaneous signal discrimination.
+
+**Constraint 3 — Range (depth) resolution at long range**
+
+Ability to separate two objects at the same angle but different depths at 200–300 m.
+Governed purely by chirp bandwidth. All 77 GHz FMCW radars (Arbe, Mobileye,
+Vayyar) are subject to the same physics — achievable range resolution at 300 m
+is approximately 30–75 cm in long-range chirp modes. Only THz (Teradar, ~1.5 cm)
+and LiDAR (Innoviz/Luminar, cm-level ToF) resolve this constraint.
+
+**Summary:**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 28 18 18 18 18
+
+   * - Sensor
+     - Angular sep.
+     - Detection sensitivity
+     - Range res. @ 300 m
+     - Highway L4 viability
+   * - Teradar
+     - ✅ Best (0.1°)
+     - ❓ Not disclosed
+     - ✅ Best (~1.5 cm)
+     - High (if specs confirmed)
+   * - Mobileye Imaging Radar
+     - ✅ Good (<0.5°)
+     - ✅ Best (100 dB)
+     - ⚠️ Not disclosed (77 GHz)
+     - Good (within EyeQ only)
+   * - Arbe Phoenix
+     - ⚠️ Limited (1°)
+     - ⚠️ Standard (~60 dB)
+     - ⚠️ ~30–75 cm @ 300 m
+     - Fusion required
+   * - Innoviz / Luminar
+     - ✅ Best (0.05°)
+     - ✅ Excellent
+     - ✅ cm-level
+     - ⚠️ Weather-limited
+
+----
+
+Mobileye Imaging Radar: Architecture Deep Dive
+------------------------------------------------
+
+Mobileye's imaging radar has been in development since 2018 — seven years of proprietary
+R&D — and achieved its first OEM nomination in May 2025 with SOP targeted for 2028.
+Key architectural details:
+
+**Hardware:**
+
+- Proprietary RFIC (Radio Frequency Integrated Circuit) components — not third-party
+- Dedicated radar SoC with 11 TOPS of on-chip compute — all processing on-chip,
+  no dependency on NVIDIA DRIVE AGX or external GPU
+- Massive MIMO TX/RX architecture — 1,500+ virtual channels
+- 170° field of view — the widest published FOV in automotive radar
+- −40 dBc side-lobe suppression — 100× better than industry ~−20 dBc
+- 100 dB dynamic range — 10,000× wider than industry standard 60 dB
+- 20 frames per second processing rate
+
+**Integration within Mobileye stack:**
+
+The imaging radar is not a standalone product. It is designed exclusively as a redundancy
+layer within Mobileye's closed EyeQ ecosystem:
+
+- **Surround ADAS:** EyeQ6H + 5 cameras + multiple Mobileye radars (hands-off, eyes-on)
+- **Chauffeur L3:** 4× EyeQ6H + cameras + imaging radar + front LiDAR (Innoviz)
+- **Drive L4:** EyeQ Ultra + cameras + imaging radar + surround LiDAR (Innoviz)
+
+This is the critical architectural distinction: Mobileye's radar is a **sensor within
+a closed system**, not a standalone sensor available to OEMs independently. An OEM
+cannot buy Mobileye's imaging radar without buying the entire EyeQ stack.
+
+**What Mobileye radar does not disclose:**
+
+- Chirp bandwidth and derived range resolution
+- Carrier frequency (implied 77 GHz FMCW from architecture description)
+- Detection range in adverse weather (fog, heavy rain)
+- Performance in long-range mode vs short-range mode separately
 
 ----
 
@@ -283,25 +436,58 @@ equity arrangement. The structure is a three-way stack:
    Layer 3  Perciv AI software
             AI-based Occupancy Grid — detailed spatial map of vehicle surroundings
 
-The full stack runs on NVIDIA's DRIVE Hyperion autonomous driving reference platform.
-The value to OEMs is pre-validated integration across all three layers, significantly
-reducing integration engineering overhead.
+The full stack runs on NVIDIA's DRIVE Hyperion autonomous driving reference platform,
+reducing OEM integration engineering overhead significantly.
 
-**CES 2025:** Radar-based free space mapping demonstration on DRIVE AGX Orin.
+**CES 2025:** Radar-based free space mapping on DRIVE AGX Orin.
 
-**CES 2026:** Live AI-based Occupancy Grid demo with Perciv AI; direct LiDAR performance
-comparison demonstrating Arbe's all-weather advantage in degraded visibility conditions.
+**CES 2026:** Live AI-based Occupancy Grid demo; direct LiDAR performance comparison
+demonstrating Arbe's all-weather advantage in degraded visibility.
 
 **What this partnership is not:**
 
-- Not exclusive — NVIDIA Hyperion simultaneously supports Innoviz LiDAR and other vendors
-- Not a production contract — it is a reference platform integration and go-to-market tool
+- Not exclusive — NVIDIA Hyperion simultaneously supports Innoviz LiDAR and others
+- Not a production contract — a reference platform integration and go-to-market tool
 - Not equity-backed — no investment component disclosed
-- Not a replacement for OEM design wins — it accelerates the path to them
+- Not relevant to Mobileye EyeQ OEMs — Mobileye runs its own radar on its own silicon
 
-The strategic logic: OEMs building on NVIDIA DRIVE Hyperion (increasingly common for
-L3+ architectures) receive Arbe's radar pre-integrated, shortening the sensor evaluation
-to production programme timeline.
+**How Arbe and Mobileye radar relate:**
+
+They do not compete directly in the same architecture. Mobileye radar is exclusively
+for EyeQ-based vehicles (closed system, SOP 2028). Arbe radar is exclusively for
+NVIDIA DRIVE-based vehicles and independent OEM stacks (available now in China,
+Western SOP 2028–2030). An OEM must choose between the two ecosystems at the
+vehicle platform design stage — sensor selection is downstream of that decision.
+
+----
+
+The Two Compute Ecosystem Split
+---------------------------------
+
+The most important strategic context for evaluating all sensor companies is the
+fundamental split between two incompatible compute ecosystems:
+
+.. code-block:: text
+
+   MOBILEYE EyeQ ECOSYSTEM (closed vertical integration)
+   ├── Compute:  Mobileye EyeQ SoC family (not NVIDIA)
+   ├── Cameras:  Mobileye-specified
+   ├── Radar:    Mobileye Imaging Radar (in-house, SOP 2028)
+   ├── LiDAR:    Innoviz (Chauffeur/Drive only)
+   ├── Software: Mobileye closed stack (perception, REM, RSS)
+   └── Sensors not in scope: Arbe, Vayyar, Teradar, Cepton
+
+   NVIDIA DRIVE ECOSYSTEM (open platform)
+   ├── Compute:  DRIVE Orin (254 TOPS) / Thor (2,000 TOPS)
+   ├── Cameras:  OEM/Tier-1 choice
+   ├── Radar:    Arbe Phoenix (DRIVE-integrated via NVIDIA partnership)
+   ├── LiDAR:    Innoviz (Hyperion 8) / others
+   ├── Software: OEM or Tier-1 built on DRIVE OS + TensorRT
+   └── Flexibility: Full sensor substitution, higher integration effort
+
+Innoviz is the only sensor company present in **both** ecosystems — Mobileye Drive
+(as primary LiDAR) and NVIDIA Hyperion 8 (as validated sensor option). This is
+what makes Innoviz the most strategically positioned sensor supplier in the field.
 
 ----
 
@@ -310,7 +496,7 @@ All-Weather Performance
 
 .. list-table::
    :header-rows: 1
-   :widths: 18 14 14 14 14 14
+   :widths: 20 13 13 13 13 14
 
    * - Platform
      - Rain/fog
@@ -319,53 +505,60 @@ All-Weather Performance
      - Night
      - Physics basis
    * - Teradar
-     - ✅
-     - ✅
-     - ✅
-     - ✅
+     - ✅ Full
+     - ✅ Full
+     - ✅ Immune
+     - ✅ Full
      - THz wave penetration
    * - Arbe
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - Radar physics
-   * - Mobileye
-     - ⚠️
-     - ❌
-     - ⚠️
-     - ⚠️
+     - ✅ Full
+     - ✅ Full
+     - ✅ Immune
+     - ✅ Full
+     - 77 GHz radar physics
+   * - Mobileye Imaging Radar
+     - ✅ Full
+     - ✅ Full
+     - ✅ Immune
+     - ✅ Full
+     - 77 GHz radar physics
+   * - Mobileye (cameras only)
+     - ⚠️ Degraded
+     - ❌ Fails
+     - ⚠️ Limited
+     - ⚠️ Reduced
      - Camera-dependent
    * - Innoviz
-     - ⚠️
-     - ⚠️
-     - ✅
-     - ✅
+     - ⚠️ Partial
+     - ⚠️ Partial
+     - ✅ Resilient
+     - ✅ Full
      - 905 nm LiDAR
    * - Luminar
-     - ⚠️ (better)
-     - ⚠️
-     - ✅
-     - ✅
+     - ⚠️ Better
+     - ⚠️ Partial
+     - ✅ Resilient
+     - ✅ Full
      - 1550 nm LiDAR
    * - Vayyar
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-     - Radar physics
+     - ✅ Full
+     - ✅ Full
+     - ✅ Immune
+     - ✅ Full
+     - 77 GHz radar physics
    * - Cepton
-     - ⚠️
-     - ⚠️
-     - ✅
-     - ✅
+     - ⚠️ Partial
+     - ⚠️ Partial
+     - ✅ Resilient
+     - ✅ Full
      - MMT® LiDAR
 
 .. note::
-   Luminar's 1550 nm wavelength has better fog penetration than 905 nm LiDAR (Innoviz,
-   Cepton) due to lower atmospheric scattering at longer wavelengths. All LiDAR degrades
-   in heavy precipitation. THz and radar platforms (Teradar, Arbe, Vayyar) have full
-   all-weather immunity — a physics advantage, not an engineering one.
+   Mobileye's all-weather performance characterisation now requires qualification by
+   product. Mobileye Chauffeur and Drive (with imaging radar) have full all-weather
+   radar coverage. Mobileye Surround ADAS and SuperVision (cameras + limited radar)
+   remain weather-constrained. The imaging radar changes Mobileye's weather profile
+   but only for its L3/L4 products, not its high-volume L2 ADAS business.
 
 ----
 
@@ -394,12 +587,12 @@ Financial Snapshot
    * - Mobileye
      - Public
      - —
-     - **$1,894M**
+     - **$1,894M** (+15% YoY)
      - Nasdaq: MBLY · $1.8B cash
    * - Innoviz
      - ~$300M+
      - $40M direct — Feb 2025
-     - **$55M**
+     - **$55M** (>2× 2024)
      - Nasdaq: INVZ · $95M NRE pipeline
    * - Luminar
      - $306M
@@ -419,7 +612,8 @@ Financial Snapshot
 
 .. warning::
    Luminar filed Chapter 11 in December 2025. MicroVision agreed to acquire LiDAR assets
-   January 2026. Do not commit to new Luminar programmes until acquisition closes.
+   January 2026. Do not commit to new Luminar programmes until acquisition closes and a
+   confirmed roadmap is available.
 
 ----
 
@@ -435,27 +629,31 @@ OEM Design Win Tracker
      - Autonomy level
      - Production status
    * - Teradar
-     - 5 US/EU OEMs + 3 Tier-1s (undisclosed)
+     - 5 US/EU OEMs + 3 Tier-1s (undisclosed); Lockheed Martin Ventures investor
      - L2–L5
-     - Win targeted 2028
+     - Production win targeted 2028
    * - Arbe
-     - Chinese state OEM (Hirain LRR610 L4); European OEM (L3 data collection); AI compute co.
+     - Chinese state OEM via Hirain LRR610 (L4); European OEM L3 data collection;
+       AI compute co. dev kits; European OEM strategic award not expected near-term
      - L3–L4
      - Serial production China; RFI stage EU/US
    * - Mobileye
-     - VW (L2++/L3/robotaxi), Mahindra, major US OEM, 50+ others
+     - VW (L2++/L3/robotaxi), Mahindra (SuperVision + Surround), major US OEM
+       (Surround), 50+ others; imaging radar first OEM nomination May 2025 (SOP 2028)
      - L2–L4
      - Mass production · 230M+ vehicles
    * - Innoviz
-     - BMW Series 7 L3, VW ADMT ID. Buzz, Top-5 OEM (L3 SOP 2027), Mobileye Drive
+     - BMW Series 7 L3, VW ADMT ID. Buzz, Top-5 OEM (L3 SOP 2027),
+       Mobileye Drive, NVIDIA Hyperion 8
      - L3–L4
      - Series production; SOP ramp 2026–2027
    * - Luminar
-     - Volvo EX90/ES90 (terminated); Mercedes-Benz (status unclear)
+     - Volvo EX90/ES90 (terminated Nov 2025); Mercedes-Benz (status unclear)
      - L3
      - **Disrupted** — Chapter 11
    * - Vayyar
-     - Multiple undisclosed OEMs; Euro NCAP validated
+     - Multiple undisclosed OEMs; Euro NCAP validated; 35% NCAP points from
+       2–4 external + 1 in-cabin sensors
      - L2–L3
      - Production-ready · deployed
    * - Cepton (Koito)
@@ -475,25 +673,28 @@ Technology Roadmap Timeline
    * - Period
      - Milestones
    * - Q4 2025
-     - Arbe: Hirain LRR610 serial production (China L4). Innoviz: InnovizThree launch.
-       Luminar: Chapter 11 filing; Volvo termination. Mobileye: imaging radar L3 design win.
-       Teradar: stealth exit; $150M Series B; CES 2026 debut.
+     - Arbe: Hirain LRR610 serial production (China L4). Innoviz: InnovizThree launch
+       (35% cost cut). Luminar: Chapter 11; Volvo termination. Teradar: stealth exit;
+       $150M Series B; CES 2026 debut.
    * - Q1–Q2 2026
-     - Mobileye: VW/MOIA robotaxi pre-series production. Innoviz: Top-5 OEM SOP discussions.
-       Luminar/MicroVision: Halo B-sample (Q2). Arbe: new CEO; multi-market pivot.
-       Innoviz ULR 1 km range launched April 2026.
+     - Mobileye: VW/MOIA robotaxi pre-series production; Mahindra SuperVision win.
+       Innoviz: ULR 1 km range launched April 2026; Top-5 OEM SOP discussions.
+       Luminar/MicroVision: Halo B-sample (Q2). Arbe: new CEO Ram Machness (Apr 2026);
+       multi-market pivot to defense/robotaxi/off-road.
    * - 2026
-     - Teradar: prototype availability US and Europe. Arbe: 4 OEM design-in target (Western).
-       Mobileye: 37M+ IQ unit guidance. Innoviz: Fabrinet high-volume line ramping.
+     - Teradar: prototype availability US and Europe. Arbe: 4 OEM design-in target
+       (Western). Mobileye: 37M+ IQ unit guidance; imaging radar OEM development.
+       Innoviz: Fabrinet high-volume line ramping.
    * - 2027
-     - Innoviz: Top-5 OEM L3 programme SOP. Mobileye: Chauffeur L3 production ramp.
+     - Innoviz: Top-5 OEM L3 SOP. Mobileye: Chauffeur L3 production ramp with VW.
        IEC/FDA THz medical regulatory groundwork. Vayyar: 4D radar market scaling.
    * - 2028
-     - Teradar: global high-volume production. Arbe: Western automotive production
-       (contingent on 2026 design wins). Industry THz ADAS deployment expected.
+     - Teradar: global high-volume production target. Arbe: Western automotive
+       production contingent on 2026 design wins. Mobileye imaging radar SOP.
+       Industry THz ADAS deployment expected.
    * - 2028+
-     - Luminar (MicroVision): next-gen vehicle programmes (deferred). Full L4/L5 ODD
-       expansion across surviving platforms.
+     - Luminar (MicroVision): next-gen vehicle programmes (deferred).
+       Full L4/L5 ODD expansion across surviving platforms.
 
 ----
 
@@ -511,15 +712,17 @@ Patent Landscape & IP Positioning
      - Strong · greenfield THz
      - THz chip architecture; solid-state THz imaging; on-chip TX/RX antennas;
        material spectral fingerprinting; automotive THz fusion.
-       No incumbent holds meaningful THz automotive patents — window is 2025–2028.
+       **No incumbent holds meaningful THz automotive patents — window is 2025–2028.**
    * - Arbe
      - Moderate · disclosed chipset IP
      - 4D FMCW signal processing; 2,304-channel virtual aperture synthesis;
        ultra-high resolution imaging radar; automotive MIMO architectures
    * - Mobileye
-     - Very strong · decades of IP
+     - **Very strong · 2,000+ patents**
      - Computer vision ADAS; RSS safety model (patented — potential ISO standard);
-       EyeQ SoC architecture; REM mapping; imaging radar; sensor fusion
+       EyeQ SoC; REM mapping; imaging radar RFIC architecture (patents US12123937,
+       US11747457 covering multi-static distributed radar aperture synthesis);
+       side-lobe suppression techniques; 100 dB dynamic range radar architecture
    * - Innoviz
      - Strong · MEMS LiDAR
      - MEMS scanning LiDAR; solid-state beam steering; point cloud processing;
@@ -541,8 +744,14 @@ Patent Landscape & IP Positioning
    **Mobileye RSS patent risk.** The Responsibility Sensitive Safety (RSS) model defines
    a mathematical framework for assigning fault in AV incidents. If RSS becomes an ISO
    standard (actively pursued by Mobileye), it could lock OEMs into Mobileye's broader
-   software stack even if they source sensors elsewhere. This is a software moat that
-   extends beyond hardware competition.
+   software stack even if they source sensors elsewhere.
+
+   **Mobileye imaging radar IP.** Patent US11747457 discloses a multi-static radar system
+   with spatially distributed units synthesising a larger aperture across the vehicle.
+   Combined with US12123937 (compact transmitter with digital-to-analog converters and
+   analog beamforming), Mobileye holds a growing imaging radar IP position that will
+   constrain third-party radar suppliers attempting to match the 100 dB / −40 dBc
+   performance within the same architectural approach.
 
 ----
 
@@ -550,19 +759,31 @@ Engineering Recommendations
 ----------------------------
 
 **Immediate (now):**
-Arbe (radar backbone — all-weather, velocity accuracy, stationary object detection)
-+ Innoviz (LiDAR — 0.05° angular resolution at range) + Mobileye (software stack,
-mapping, single-ECU integration). Covers all binding constraints available today.
+Arbe (radar backbone — all-weather, velocity accuracy, stationary object detection,
+available in production) + Innoviz (LiDAR — 0.05° angular resolution at range,
+in production) + Mobileye EyeQ6H (software stack, mapping, single-ECU integration,
+$1.9B revenue platform). This covers all binding constraints available today.
 
 **Medium-term (2026–2028):**
-Add Teradar as the THz sensing layer. The Teradar + Arbe pairing provides the strongest
+Add Teradar as the THz sensing layer when prototypes are available (2026) and
+production is confirmed (2028). The Teradar + Arbe pairing provides the strongest
 available redundancy argument for L4/L5 regulatory approval — THz and 77 GHz radar
 share no physical failure modes. Teradar's 0.1° angular resolution and material
-fingerprinting will improve edge-case object classification at range.
+fingerprinting will improve edge-case object classification at long range in ways
+no 77 GHz radar can match regardless of dynamic range or channel count.
+
+**If building on Mobileye EyeQ stack:**
+Mobileye's imaging radar (SOP 2028) becomes the natural radar choice — integrated,
+validated, and economically bundled within the EyeQ ecosystem. Arbe is not in scope
+for EyeQ-based vehicles. Innoviz remains in scope for Chauffeur and Drive tiers only.
+
+**If building on NVIDIA DRIVE platform:**
+Arbe (radar) + Innoviz (LiDAR) + Teradar (THz, from 2026/2028) is the recommended
+stack. Mobileye's imaging radar is not available outside the EyeQ ecosystem.
 
 **Remove from consideration:**
 Luminar — until MicroVision acquisition closes and a confirmed OEM roadmap exists.
 
 **Watch list:**
-Vayyar for cost-sensitive L2+ platforms prioritising sensor consolidation.
-Cepton/Koito for GM-ecosystem vehicles where Ultra Cruise supply chain is established.
+Vayyar for cost-sensitive L2+ platforms prioritising sensor consolidation (replacing
+20+ sensors with 2–4 XRR chips). Cepton/Koito for GM-ecosystem vehicles.
